@@ -14,15 +14,15 @@ public class NoticeApi2 {
 	private final StringBuilder stringBuilder = new StringBuilder();
 
 	public NoticeApi2(AirbrakeNotice notice) {
-		notice("2.0.0");
+		notice("2.2");
 		{
 			apikey(notice);
 
 			notifier();
 			{
-				name("airbrake");
-				version("1.7-socrata-SNAPSHOT");
-				url("http://airbrake.googlecode.com");
+				name("airbrake-java");
+				version("2.0");
+				url("https://github.com/airbrake/airbrake-java");
 			}
 			end("notifier");
 

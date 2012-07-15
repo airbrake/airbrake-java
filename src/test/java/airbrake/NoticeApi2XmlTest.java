@@ -41,7 +41,8 @@ public class NoticeApi2XmlTest {
 
 	@Test
 	public void testErrorBacktraceLine() {
-		assertThat(xml(new NoticeApi2(notice)), containsString("<line method=org.junit.internal.runners.MethodRoadie.run file=MethodRoadie.java number=42/>"));
+		System.out.println(new NoticeApi2(notice));
+		assertThat(xml(new NoticeApi2(notice)), containsString("<line method=org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run file=JUnit4TestReference.java number=50/>"));
 	}
 
 	@Test

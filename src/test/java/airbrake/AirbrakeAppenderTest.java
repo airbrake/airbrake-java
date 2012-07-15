@@ -53,7 +53,6 @@ public class AirbrakeAppenderTest {
 		assertThat(notice.backtrace(), hasItem("at airbrake.Exceptions.newException(Exceptions.java:13)"));
 
 		assertThat(notice.backtrace(), hasItem("at sun.reflect.NativeMethodAccessorImpl.invoke0(NativeMethodAccessorImpl.java-2)"));
-		assertThat(notice.backtrace(), hasItem("at org.junit.internal.runners.TestMethod.invoke(TestMethod.java:59)"));
 	}
 
 	@Test

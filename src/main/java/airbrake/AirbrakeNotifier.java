@@ -22,7 +22,6 @@ public class AirbrakeNotifier {
 	}
 
 	private void err(final AirbrakeNotice notice, final Exception e) {
-		System.out.println(notice.toString());
 		e.printStackTrace();
 	}
 
@@ -39,11 +38,11 @@ public class AirbrakeNotifier {
 	}
 
 	private int send(final String yaml, final HttpURLConnection connection) throws IOException {
+		System.out.println(yaml);
 		int statusCode;
 		final OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
 		writer.write(yaml);
 		writer.close();
-
 		statusCode = connection.getResponseCode();
 		return statusCode;
 	}

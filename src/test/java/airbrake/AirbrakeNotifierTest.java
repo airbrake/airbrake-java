@@ -18,7 +18,7 @@ import org.junit.*;
 
 public class AirbrakeNotifierTest {
 
-	public static final String API_KEY = "a603290b07eab460795acf7001558510";
+	public static final String API_KEY = "934c9b1041cae20e1b6b48a76bbaa2d3";
 
 	protected static final Backtrace BACKTRACE = new Backtrace(asList("backtrace is empty"));;
 	protected static final Map<String, Object> REQUEST = new HashMap<String, Object>();
