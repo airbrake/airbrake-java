@@ -1,2 +1,3 @@
 9 jul 2012
  - update airbrake to v2 api [8]
+ * remove hamcrest dependency [2]

@@ -9,7 +9,7 @@ import org.junit.*;
 public class NoticeApi2XmlBuilderTest {
 
 	private String xml(AirbrakeNotice notice) {
-		NoticeApi2 noticeApi2 = new NoticeApi2(notice);
+		NoticeXml noticeApi2 = new NoticeXml(notice);
 		return noticeApi2.toString();
 	}
 

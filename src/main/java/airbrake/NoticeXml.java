@@ -9,11 +9,11 @@ import java.util.Map.Entry;
 
 import org.apache.commons.lang.*;
 
-public class NoticeApi2 {
+public class NoticeXml {
 
 	private final StringBuilder stringBuilder = new StringBuilder();
 
-	public NoticeApi2(AirbrakeNotice notice) {
+	public NoticeXml(AirbrakeNotice notice) {
 		notice("2.2");
 		{
 			apikey(notice);
@@ -130,7 +130,7 @@ public class NoticeApi2 {
 		tag("notifier");
 	}
 
-	private NoticeApi2 tag(String string) {
+	private NoticeXml tag(String string) {
 		append("<" + string + ">");
 		return this;
 	}
@@ -139,7 +139,7 @@ public class NoticeApi2 {
 		tag(string).text(contents).end(string);
 	}
 
-	private NoticeApi2 text(String string) {
+	private NoticeXml text(String string) {
 		append(StringEscapeUtils.escapeXml(string));
 		return this;
 	}

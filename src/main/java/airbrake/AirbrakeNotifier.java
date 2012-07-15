@@ -29,7 +29,7 @@ public class AirbrakeNotifier {
 		try {
 			final HttpURLConnection toairbrake = createConnection();
 			addingProperties(toairbrake);
-			String toPost = new NoticeApi2(notice).toString();
+			String toPost = new NoticeXml(notice).toString();
 			return send(toPost, toairbrake);
 		} catch (final Exception e) {
 			err(notice, e);
@@ -38,7 +38,6 @@ public class AirbrakeNotifier {
 	}
 
 	private int send(final String yaml, final HttpURLConnection connection) throws IOException {
-		System.out.println(yaml);
 		int statusCode;
 		final OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
 		writer.write(yaml);
