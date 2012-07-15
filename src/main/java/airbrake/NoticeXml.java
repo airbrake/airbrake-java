@@ -21,7 +21,7 @@ public class NoticeXml {
 			notifier();
 			{
 				name("airbrake-java");
-				version("2.0");
+				version("2.2");
 				url("https://github.com/airbrake/airbrake-java");
 			}
 			end("notifier");

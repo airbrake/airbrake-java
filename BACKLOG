@@ -1,3 +1,8 @@
+15 jul 2012
+ - remove hamcrest dependency [2]
+ - update README with initial docs [2]
+
 9 jul 2012
  - update airbrake to v2 api [8]
- * remove hamcrest dependency [2]
+
+ * adding to maven2 repo
