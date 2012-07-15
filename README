@@ -1,0 +1,62 @@
+Now updated to airbrake API v2
+
+please be advised that this library is non official and supported by the author directly with the contribution of some people.
+
+[http://airbrake.googlecode.com/files/airbrake-notifier-1.8.jar airbrake-notifier] is simple library that can be used with few effort in your application. It allow you to send exception catched by your application to nice airbrake application. The easy way to use airbrake is configuriong log4j appender. Otherwise if you don't use log4j you can use airbrake notifier directly with a very simple API.
+
+== Using it with Maven2 ==
+{{{
+<project>
+  <repositories>
+    <repository>
+      <id>airbrake-repository</id>
+      <name>Airbrake Repository</name>
+      <url>http://github.com/airbrake/airbraje-java/maven2</url>
+    </repository>
+  </repositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>airbrake</groupId>
+      <artifactId>airbrake-java</artifactId>
+      <version>2.2</version>
+    </dependency>
+  </dependencies>
+
+</project>
+}}}
+
+== Using it without Maven2 ==
+you need to add these libraries to your classpath
+ * [http://github.com/airbrake/airbrake-java/maven2/airbrake/airbrake-java/2.2/airbrake-java-2.2.jar airbrake-java-2.2]
+ * [http://repo1.maven.org/maven2/log4j/log4j/1.2.14/log4j-1.2.14.jar log4j-1.2.14]
+
+== Configuring Airbrake Appender Log4j ==
+{{{
+log4j.rootLogger=INFO, stdout, airbrake
+
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=[%d,%p] [%c{1}.%M:%L] %m%n
+
+log4j.appender.airbrake=code.lucamarrocco.airbrake.AirbrakeAppender
+log4j.appender.airbrake.api_key=YOUR_HOPTOAD_API_KEY
+#log4j.appender.airbrake.env=development
+#log4j.appender.airbrake.env=production
+log4j.appender.airbrake.env=test
+log4j.appender.airbrake.enabled=true
+}}}
+
+== Using Directly ==
+{{{
+
+try {
+  doSomethingThatThrowAnException();
+}
+catch(Throwable t) {
+  AirbrakeNotice notice = new AirbrakeNoticeBuilder(YOUR_HOPTOAD_API_KEY, t, "env").newNotice();
+  AirbrakeNotifier notifier = new AirbrakeNotifier();
+  notifier.notify(notice);
+}
+
+}}}
