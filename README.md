@@ -1,7 +1,7 @@
 Airbrake Java
 =============
 
-This is the notifier jar for integrating apps with [Airbrake](http://airbrake.io) with Java Applications.
+This is the notifier jar for integrating apps with [Airbrake](http://airbrake.io) with Java Applications. Sign up for a [Free](https://airbrake.io/account/new/Free) or [Paid](https://airbrake.io/account/new?source=github) account.
 
 When an uncaught exception occurs, Airbrake will POST the relevant data
 to the Airbrake server specified in your environment.
