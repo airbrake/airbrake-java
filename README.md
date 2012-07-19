@@ -53,7 +53,7 @@ Log4j
 	log4j.appender.airbrake.enabled=true
 
 
-Directly calling Airbrake-Java
+Directly
 ------------------------------
 
 	try {
