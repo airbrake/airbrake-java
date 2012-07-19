@@ -30,6 +30,7 @@ public class AirbrakeNotifier {
 			final HttpURLConnection toairbrake = createConnection();
 			addingProperties(toairbrake);
 			String toPost = new NoticeXml(notice).toString();
+			System.out.println(toPost);
 			return send(toPost, toairbrake);
 		} catch (final Exception e) {
 			err(notice, e);

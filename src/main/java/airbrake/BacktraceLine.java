@@ -6,8 +6,6 @@ package airbrake;
 
 import static java.text.MessageFormat.*;
 
-import org.apache.commons.lang.*;
-
 public class BacktraceLine {
 
 	private final String className;
@@ -74,7 +72,6 @@ public class BacktraceLine {
 	}
 
 	public String toXml() {
-		return format("<line method=\"{0}.{1}\" file=\"{2}\" number=\"{3}\"/>", StringEscapeUtils.escapeXml(className),
-				StringEscapeUtils.escapeXml(methodName), StringEscapeUtils.escapeXml(fileName), lineNumber);
+		return format("<line method=\"{0}.{1}\" file=\"{2}\" number=\"{3}\"/>", className, methodName, fileName, lineNumber);
 	}
 }

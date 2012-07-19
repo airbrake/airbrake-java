@@ -7,8 +7,6 @@ package airbrake;
 import java.util.*;
 import java.util.Map.Entry;
 
-import org.apache.commons.lang.*;
-
 public class NoticeXml {
 
 	private final StringBuilder stringBuilder = new StringBuilder();
@@ -140,7 +138,7 @@ public class NoticeXml {
 	}
 
 	private NoticeXml text(String string) {
-		append(StringEscapeUtils.escapeXml(string));
+		append(string);
 		return this;
 	}
 
