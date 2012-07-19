@@ -41,7 +41,7 @@ public class NoticeApi2XmlTest {
 
 	@Test
 	public void testErrorBacktraceLine() {
-		assertThat(xml(new NoticeXml(notice)), containsString("<line method=org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run file=JUnit4TestReference.java number=50/>"));
+		assertThat(xml(new NoticeXml(notice)), containsString("<line method=org.apache.maven.surefire.booter.SurefireStarter.runSuitesInProcess file=SurefireStarter.java number=91/>"));
 	}
 
 	@Test
@@ -56,7 +56,7 @@ public class NoticeApi2XmlTest {
 
 	@Test
 	public void testNoticeVersion() {
-		assertThat(xml(new NoticeXml(notice)), containsString("notice version=2.0"));
+		assertThat(xml(new NoticeXml(notice)), containsString("notice version=2.2"));
 	}
 
 	@Test
@@ -66,17 +66,17 @@ public class NoticeApi2XmlTest {
 
 	@Test
 	public void testNotifierName() {
-		assertThat(xml(new NoticeXml(notice)), containsString("<name>airbrake</name>"));
+		assertThat(xml(new NoticeXml(notice)), containsString("<name>airbrake-java</name>"));
 	}
 
 	@Test
 	public void testNotifierUrl() {
-		assertThat(xml(new NoticeXml(notice)), containsString("<url>http://airbrake.googlecode.com</url>"));
+		assertThat(xml(new NoticeXml(notice)), containsString("<url>https://github.com/airbrake/airbrake-java</url>"));
 	}
 
 	@Test
 	public void testNotifierVersion() {
-		assertThat(xml(new NoticeXml(notice)), containsString("<version>1.7-socrata-SNAPSHOT</version>"));
+		assertThat(xml(new NoticeXml(notice)), containsString("<version>2.2</version>"));
 	}
 
 	private String xml(NoticeXml noticeApi) {
