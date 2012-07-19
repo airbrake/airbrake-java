@@ -73,4 +73,6 @@ For help with using Airbrake and this notifier visit [our support site](http://h
 
 For SSL verification see the [Resources](https://github.com/airbrake/airbrake/blob/master/resources/README.md).
 
+For any issues, please post then in our [Issues](https://github.com/airbrake/airbrake-java/issues).
+
 
