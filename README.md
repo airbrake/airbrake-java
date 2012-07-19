@@ -33,8 +33,8 @@ Without Maven
 -------------
 
 you need to add these libraries to your classpath
- * [http://github.com/airbrake/airbrake-java/maven2/airbrake/airbrake-java/2.2/airbrake-java-2.2.jar airbrake-java-2.2]
- * [http://repo1.maven.org/maven2/log4j/log4j/1.2.14/log4j-1.2.14.jar log4j-1.2.14]
+ * [airbrake-java-2.2](http://github.com/airbrake/airbrake-java/maven2/airbrake/airbrake-java/2.2/airbrake-java-2.2.jar)
+ * [log4j-1.2.14](http://repo1.maven.org/maven2/log4j/log4j/1.2.14/log4j-1.2.14.jar)
 
 Log4j
 -----
