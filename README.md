@@ -46,7 +46,7 @@ Log4j
 	log4j.appender.stdout.layout.ConversionPattern=[%d,%p] [%c{1}.%M:%L] %m%n
 
 	log4j.appender.airbrake=code.lucamarrocco.airbrake.AirbrakeAppender	
-	log4j.appender.airbrake.api_key=YOUR_HOPTOAD_API_KEY
+	log4j.appender.airbrake.api_key=YOUR_AIRBRAKE_API_KEY
 	#log4j.appender.airbrake.env=development
 	#log4j.appender.airbrake.env=production
 	log4j.appender.airbrake.env=test
@@ -60,7 +60,7 @@ Directly
   		doSomethingThatThrowAnException();
 	}
 	catch(Throwable t) {
-  		AirbrakeNotice notice = new AirbrakeNoticeBuilder(YOUR_HOPTOAD_API_KEY, t, "env").newNotice();
+  		AirbrakeNotice notice = new AirbrakeNoticeBuilder(YOUR_AIRBRAKE_API_KEY, t, "env").newNotice();
   		AirbrakeNotifier notifier = new AirbrakeNotifier();
   		notifier.notify(notice);
 	}
