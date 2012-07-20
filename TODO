@@ -13,3 +13,8 @@ from slorg1@gmail.com
 This may be something we need to do on the API, but is something we would look at.
 Other stuff. What else could we do it make it beter? 
 Extended it. Mainly supporting JRuby. http://marxsoftware.blogspot.com/2009/05/jrubys-ruby-style-exception-handling.html  http://jruby.org/apidocs/org/jruby/exceptions/RaiseException.html
+
+Integrate
+https://github.com/m5/hoptoad-android
+https://github.com/stuartmg/hoptoad-notifier
+https://github.com/spariev/hoptoad-notifier-java
