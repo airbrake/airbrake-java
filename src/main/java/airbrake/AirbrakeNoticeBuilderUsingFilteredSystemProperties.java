@@ -12,13 +12,9 @@ public class AirbrakeNoticeBuilderUsingFilteredSystemProperties extends Airbrake
 
 	public AirbrakeNoticeBuilderUsingFilteredSystemProperties(final String apiKey, final Backtrace backtraceBuilder, final Throwable throwable, final String env) {
 		super(apiKey, backtraceBuilder, throwable, env);
-
 		environment(System.getProperties());
-
 		addMDCToSession();
-
 		standardEnvironmentFilters();
-
 		ec2EnvironmentFilters();
 	}
 
