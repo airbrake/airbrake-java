@@ -15,7 +15,7 @@ public class AirbrakeAppenderTest {
 
 	@Test
 	public void testNewAppenderWithApiKey() {
-		final AirbrakeAppender appender = new AirbrakeAppender(TEST_API_KEY);
+		final AirbrakeAppender appender = new AirbrakeAppender(API_KEY);
 
 		final AirbrakeNotice notice = appender.newNoticeFor(newException(ERROR_MESSAGE));
 
@@ -24,7 +24,7 @@ public class AirbrakeAppenderTest {
 
 	@Test
 	public void testNewAppenderWithApiKeyAndBacktrace() {
-		final AirbrakeAppender appender = new AirbrakeAppender(TEST_API_KEY, new Backtrace());
+		final AirbrakeAppender appender = new AirbrakeAppender(API_KEY, new Backtrace());
 
 		final AirbrakeNotice notice = appender.newNoticeFor(newException(ERROR_MESSAGE));
 
@@ -33,7 +33,7 @@ public class AirbrakeAppenderTest {
 
 	@Test
 	public void testNotyfyThrowable() {
-		final AirbrakeAppender appender = new AirbrakeAppender(TEST_API_KEY);
+		final AirbrakeAppender appender = new AirbrakeAppender(API_KEY);
 
 		final AirbrakeNotice notice = appender.newNoticeFor(newException(ERROR_MESSAGE));
 
@@ -44,7 +44,7 @@ public class AirbrakeAppenderTest {
 
 	@Test
 	public void testNotyfyThrowable$UseBacktrace() {
-		final AirbrakeAppender appender = new AirbrakeAppender(TEST_API_KEY, new Backtrace());
+		final AirbrakeAppender appender = new AirbrakeAppender(API_KEY, new Backtrace());
 
 		final AirbrakeNotice notice = appender.newNoticeFor(newException(ERROR_MESSAGE));
 
@@ -57,7 +57,7 @@ public class AirbrakeAppenderTest {
 
 	@Test
 	public void testNotyfyThrowable$UseQuiteBacktrace() {
-		final AirbrakeAppender appender = new AirbrakeAppender(TEST_API_KEY, new QuietRubyBacktrace());
+		final AirbrakeAppender appender = new AirbrakeAppender(API_KEY, new QuietRubyBacktrace());
 
 		final AirbrakeNotice notice = appender.newNoticeFor(newException(ERROR_MESSAGE));
 
@@ -68,7 +68,7 @@ public class AirbrakeAppenderTest {
 
 	@Test
 	public void testNotyfyThrowable$UseRubyBacktrace() {
-		final AirbrakeAppender appender = new AirbrakeAppender(TEST_API_KEY, new RubyBacktrace());
+		final AirbrakeAppender appender = new AirbrakeAppender(API_KEY, new RubyBacktrace());
 
 		final AirbrakeNotice notice = appender.newNoticeFor(newException(ERROR_MESSAGE));
 
@@ -80,7 +80,7 @@ public class AirbrakeAppenderTest {
 	@Test
 	public void testNotyfyThrowable$UseSwitchBacktrace() {
 		final SwitchBacktrace switchBacktrace = new SwitchBacktrace();
-		final AirbrakeAppender appender = new AirbrakeAppender(TEST_API_KEY, switchBacktrace);
+		final AirbrakeAppender appender = new AirbrakeAppender(API_KEY, switchBacktrace);
 
 		switchBacktrace.quiet();
 		final AirbrakeNotice quietNotice = appender.newNoticeFor(newException(ERROR_MESSAGE));

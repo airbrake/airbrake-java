@@ -9,9 +9,9 @@ import static org.junit.Assert.*;
 
 import org.junit.*;
 
-public class NoticeApi2XmlTest {
+public class NoticeApiXmlTest {
 
-	NoticeApi2XmlBuilderTest t;
+	NoticeApiXmlBuilderTest t;
 
 	private AirbrakeNotice notice;
 
@@ -41,17 +41,17 @@ public class NoticeApi2XmlTest {
 
 	@Test
 	public void testErrorBacktraceLine() {
-		assertThat(xml(new NoticeXml(notice)), containsString("<line method=org.apache.maven.surefire.booter.SurefireStarter.runSuitesInProcess file=SurefireStarter.java number=91/>"));
+		assertThat(xml(new NoticeXml(notice)), containsString("<line method=org.junit.runners.BlockJUnit4ClassRunner.runChild file=BlockJUnit4ClassRunner.java number=76/>"));
 	}
 
 	@Test
 	public void testErrorClass() {
-		assertThat(xml(new NoticeXml(notice)), containsString("<class>java.lang.RuntimeException</class>"));
+		assertThat(xml(new NoticeXml(notice)), containsString("<class><![CDATA[java.lang.RuntimeException]]></class>"));
 	}
 
 	@Test
 	public void testErrorMessage() {
-		assertThat(xml(new NoticeXml(notice)), containsString("<message>errorMessage</message>"));
+		assertThat(xml(new NoticeXml(notice)), containsString("<message><![CDATA[errorMessage]]></message>"));
 	}
 
 	@Test
@@ -66,17 +66,17 @@ public class NoticeApi2XmlTest {
 
 	@Test
 	public void testNotifierName() {
-		assertThat(xml(new NoticeXml(notice)), containsString("<name>airbrake-java</name>"));
+		assertThat(xml(new NoticeXml(notice)), containsString("<name><![CDATA[airbrake-java]]></name>"));
 	}
 
 	@Test
 	public void testNotifierUrl() {
-		assertThat(xml(new NoticeXml(notice)), containsString("<url>https://github.com/airbrake/airbrake-java</url>"));
+		assertThat(xml(new NoticeXml(notice)), containsString("<url><![CDATA[https://github.com/airbrake/airbrake-java]]></url>"));
 	}
 
 	@Test
 	public void testNotifierVersion() {
-		assertThat(xml(new NoticeXml(notice)), containsString("<version>2.2</version>"));
+		assertThat(xml(new NoticeXml(notice)), containsString("<version><![CDATA[2.2]]></version>"));
 	}
 
 	private String xml(NoticeXml noticeApi) {

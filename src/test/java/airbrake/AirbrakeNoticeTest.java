@@ -58,18 +58,18 @@ public class AirbrakeNoticeTest {
 	@Test
 	public void testNewairbrakeUsingBuilderNoticeFromException() {
 		final Exception EXCEPTION = newException(ERROR_MESSAGE);
-		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(TEST_API_KEY, EXCEPTION).newNotice();
+		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, EXCEPTION).newNotice();
 
 		assertThat(notice, is(notNullValue()));
 
-		assertThat(notice.apiKey(), is(TEST_API_KEY));
+		assertThat(notice.apiKey(), is(API_KEY));
 		assertThat(notice.errorMessage(), is(ERROR_MESSAGE));
 		assertThat(notice.backtrace(), is(notNullValue()));
 	}
 
 	@Test
 	public void testNewairbrakeUsingBuilderNoticeWithBacktrace() {
-		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(TEST_API_KEY, ERROR_MESSAGE) {
+		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, ERROR_MESSAGE) {
 			{
 				backtrace(BACKTRACE);
 			}
@@ -77,7 +77,7 @@ public class AirbrakeNoticeTest {
 
 		assertThat(notice, is(notNullValue()));
 
-		assertThat(notice.apiKey(), is(TEST_API_KEY));
+		assertThat(notice.apiKey(), is(API_KEY));
 		assertThat(notice.errorMessage(), is(ERROR_MESSAGE));
 		assertThat(notice.backtrace(), is(BACKTRACE));
 	}
@@ -85,7 +85,7 @@ public class AirbrakeNoticeTest {
 	@Test
 	public void testNewairbrakeUsingBuilderNoticeWithEc2FilteredEnvironmentWithSystemProperties() {
 
-		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(TEST_API_KEY, ERROR_MESSAGE) {
+		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, ERROR_MESSAGE) {
 
 			{
 				environment(EC2);
@@ -103,7 +103,7 @@ public class AirbrakeNoticeTest {
 
 	@Test
 	public void testNewairbrakeUsingBuilderNoticeWithEnvironment() {
-		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(TEST_API_KEY, ERROR_MESSAGE) {
+		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, ERROR_MESSAGE) {
 			{
 				environment(ENVIRONMENT);
 			}
@@ -111,26 +111,26 @@ public class AirbrakeNoticeTest {
 
 		assertThat(notice, is(notNullValue()));
 
-		assertThat(notice.apiKey(), is(TEST_API_KEY));
+		assertThat(notice.apiKey(), is(API_KEY));
 		assertThat(notice.errorMessage(), is(ERROR_MESSAGE));
 		assertThat(notice.environment().keySet(), hasItem("A_KEY"));
 	}
 
 	@Test
 	public void testNewairbrakeUsingBuilderNoticeWithErrorMessage() {
-		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(TEST_API_KEY, ERROR_MESSAGE) {
+		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, ERROR_MESSAGE) {
 			{}
 		}.newNotice();
 
 		assertThat(notice, is(notNullValue()));
 
-		assertThat(notice.apiKey(), is(TEST_API_KEY));
+		assertThat(notice.apiKey(), is(API_KEY));
 		assertThat(notice.errorMessage(), is(ERROR_MESSAGE));
 	}
 
 	@Test
 	public void testNewairbrakeUsingBuilderNoticeWithFilteredEnvironment() {
-		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(TEST_API_KEY, ERROR_MESSAGE) {
+		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, ERROR_MESSAGE) {
 			{
 				environmentFilter("A_KEY");
 			}
@@ -143,7 +143,7 @@ public class AirbrakeNoticeTest {
 
 	@Test
 	public void testNewairbrakeUsingBuilderNoticeWithRequest() {
-		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(TEST_API_KEY, ERROR_MESSAGE) {
+		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, ERROR_MESSAGE) {
 			{
 				request(REQUEST);
 			}
@@ -151,14 +151,14 @@ public class AirbrakeNoticeTest {
 
 		assertThat(notice, is(notNullValue()));
 
-		assertThat(notice.apiKey(), is(TEST_API_KEY));
+		assertThat(notice.apiKey(), is(API_KEY));
 		assertThat(notice.errorMessage(), is(ERROR_MESSAGE));
 		assertThat(notice.request(), is(REQUEST));
 	}
 
 	@Test
 	public void testNewairbrakeUsingBuilderNoticeWithSession() {
-		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(TEST_API_KEY, ERROR_MESSAGE) {
+		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, ERROR_MESSAGE) {
 			{
 				setRequest("http://localhost:3000/", "controller");
 				addSessionKey("key", "value");
@@ -167,7 +167,7 @@ public class AirbrakeNoticeTest {
 
 		assertThat(notice, is(notNullValue()));
 
-		assertThat(notice.apiKey(), is(TEST_API_KEY));
+		assertThat(notice.apiKey(), is(API_KEY));
 		assertThat(notice.errorMessage(), is(ERROR_MESSAGE));
 		assertThat((String) notice.session().get("key"), is("value"));
 
@@ -178,7 +178,7 @@ public class AirbrakeNoticeTest {
 
 	@Test
 	public void testNewairbrakeUsingBuilderNoticeWithStandardFilteredEnvironmentWithSystemProperties() {
-		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(TEST_API_KEY, ERROR_MESSAGE) {
+		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, ERROR_MESSAGE) {
 			{
 				environment(System.getProperties());
 				standardEnvironmentFilters();

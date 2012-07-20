@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 import org.junit.*;
 
-public class NoticeApi2XmlBuilderTest {
+public class NoticeApiXmlBuilderTest {
 
 	private String xml(AirbrakeNotice notice) {
 		NoticeXml noticeApi2 = new NoticeXml(notice);
@@ -17,23 +17,23 @@ public class NoticeApi2XmlBuilderTest {
 
 	@Test
 	public void testEscapesAngleBrackets() throws Exception {
-		assertThat(xml(productionNoticeBuilder.newNotice()), containsString("&lt;blink&gt;production&lt;/blink&gt;"));
+		assertThat(xml(productionNoticeBuilder.newNotice()), containsString("<blink>production</blink>"));
 	}
 
 	@Test
 	public void testSendsRequest() throws Exception {
-		AirbrakeNoticeBuilder builder = new AirbrakeNoticeBuilder(TEST_API_KEY, newThrowable()) {
+		AirbrakeNoticeBuilder builder = new AirbrakeNoticeBuilder(API_KEY, newThrowable()) {
 			{
 				setRequest("http://example.com", "carburetor");
 			}
 		};
 
-		assertThat(xml(builder.newNotice()), containsString("<request><url>http://example.com</url>"));
+		assertThat(xml(builder.newNotice()), containsString("<request><url><![CDATA[http://example.com]]></url>"));
 	}
 
 	@Test
 	public void testSendsSessionKeyColorAndLights() throws Exception {
-		AirbrakeNoticeBuilder builder = new AirbrakeNoticeBuilder(TEST_API_KEY, newThrowable()) {
+		AirbrakeNoticeBuilder builder = new AirbrakeNoticeBuilder(API_KEY, newThrowable()) {
 			{
 				setRequest("http://example.com", "carburetor");
 				addSessionKey("lights", "<blink>");
@@ -41,8 +41,8 @@ public class NoticeApi2XmlBuilderTest {
 			}
 		};
 
-		assertThat(xml(builder.newNotice()), containsString("<session><var key=\"color\">orange</var>"));
-		assertThat(xml(builder.newNotice()), containsString("<var key=\"lights\">&lt;blink&gt;</var></session>"));
+		assertThat(xml(builder.newNotice()), containsString("<session><var key=\"color\"><![CDATA[orange]]></var>"));
+		assertThat(xml(builder.newNotice()), containsString("<var key=\"lights\"><![CDATA[<blink>]]></var></session>"));
 	}
 
 	private RuntimeException newThrowable() {
@@ -51,6 +51,6 @@ public class NoticeApi2XmlBuilderTest {
 
 	@Before
 	public void setUp() {
-		productionNoticeBuilder = new AirbrakeNoticeBuilder(TEST_API_KEY, newThrowable(), "<blink>production</blink>");
+		productionNoticeBuilder = new AirbrakeNoticeBuilder(API_KEY, newThrowable(), "<blink>production</blink>");
 	}
 }

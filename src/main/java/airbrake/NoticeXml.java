@@ -138,7 +138,9 @@ public class NoticeXml {
 	}
 
 	private NoticeXml text(String string) {
+		append("<![CDATA[");
 		append(string);
+		append("]]>");
 		return this;
 	}
 
