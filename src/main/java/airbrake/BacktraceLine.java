@@ -37,7 +37,6 @@ public class BacktraceLine {
 		this.methodName = methodName;
 	}
 
-	// exposed for unit testing
 	String className() {
 		return className;
 	}
