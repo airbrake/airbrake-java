@@ -17,8 +17,7 @@ public class AirbrakeNotifier {
 	}
 
 	private HttpURLConnection createConnection() throws IOException {
-		final HttpURLConnection connection = (HttpURLConnection) new URL("http://api.airbrake.io/notifier_api/v2/notices").openConnection();
-		return connection;
+		return (HttpURLConnection) new URL("http://api.airbrake.io/notifier_api/v2/notices").openConnection();
 	}
 
 	private void err(final AirbrakeNotice notice, final Exception e) {
@@ -43,6 +42,7 @@ public class AirbrakeNotifier {
 		writer.write(yaml);
 		writer.close();
 		statusCode = connection.getResponseCode();
+		System.out.println(yaml);
 		return statusCode;
 	}
 

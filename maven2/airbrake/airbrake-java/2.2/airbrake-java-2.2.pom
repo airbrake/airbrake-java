@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0  http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>airbrake</groupId>
+  <groupId>io.airbrake</groupId>
   <artifactId>airbrake-java</artifactId>
   <packaging>jar</packaging>
   <version>2.2</version>
-  <name>Airbrake Java Notifier</name>
+  <name>Airbrake Notifier Java</name>
 	<description>This is the official library to notify exception to Airbrake.io</description>
-	<url>https://github.com/airbrake/airbrake-java</url>
+	<url>https://airbrake.io</url>
 	<scm>
     <connection>scm:git:git@github.com:airbrake/airbrake-java.git</connection>
     <url>scm:git:git@github.com:airbrake/airbrake-java.git</url>
@@ -64,6 +64,11 @@
           <source>1.6</source>
           <target>1.6</target>
         </configuration>
+      </plugin>
+			<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.1.2</version>
       </plugin>
     </plugins>
   </build>

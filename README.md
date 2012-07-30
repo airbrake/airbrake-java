@@ -13,16 +13,9 @@ Setting up with Maven
 ---------------------
 
 	<project>
-  		<repositories>
-    		<repository>
-      		<id>airbrake-repository</id>
-      		<name>Airbrake Repository</name>
-      		<url>http://github.com/airbrake/airbraje-java/maven2</url>
-    		</repository>
- 		</repositories>
   		<dependencies>
     		<dependency>
-      		<groupId>airbrake</groupId>
+      		<groupId>io.airbrake</groupId>
       		<artifactId>airbrake-java</artifactId>
       		<version>2.2</version>
     		</dependency>
