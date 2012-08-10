@@ -42,7 +42,6 @@ public class AirbrakeNotifier {
 		writer.write(yaml);
 		writer.close();
 		statusCode = connection.getResponseCode();
-		System.out.println(yaml);
 		return statusCode;
 	}
 
