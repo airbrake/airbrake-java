@@ -12,24 +12,12 @@ use log4j you can use airbrake notifier directly with a very simple API.
 Setting up with Maven
 ---------------------
 
-  <repositories>
-    <repository>
-      <id>airbrake</id>
-      <name>airbrake</name>
-      <url>https://raw.github.com/airbrake/airbrake-java/master/maven2/</url>
-      <layout>default</layout>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
-
 	<project>
   		<dependencies>
     		<dependency>
       		<groupId>io.airbrake</groupId>
       		<artifactId>airbrake-java</artifactId>
-      		<version>2.2</version>
+      		<version>2.2.0</version>
     		</dependency>
   		</dependencies>
 	</project>
@@ -38,8 +26,8 @@ Without Maven
 -------------
 
 you need to add these libraries to your classpath
- * [airbrake-java-2.2](https://github.com/airbrake/airbrake-java/blob/master/maven2/io/airbrake/airbrake-java/2.2/airbrake-java-2.2.jar)
- * [log4j-1.2.14](https://github.com/airbrake/airbrake-java/raw/master/maven2/airbrake/airbrake-java/2.2/airbrake-java-2.2.jar)
+ * [airbrake-java-2.2](https://github.com/airbrake/airbrake-java/blob/master/maven2/io/airbrake/airbrake-java/2.2.0/airbrake-java-2.2.0.jar)
+ * [log4j-1.2.14](https://github.com/airbrake/airbrake-java/raw/master/maven2/airbrake/airbrake-java/2.2.0/airbrake-java-2.2.0.jar)
 
 Log4j
 -----
