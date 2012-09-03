@@ -26,8 +26,8 @@ Without Maven
 -------------
 
 you need to add these libraries to your classpath
- * [airbrake-java-2.2](https://github.com/airbrake/airbrake-java/blob/master/maven2/io/airbrake/airbrake-java/2.2.0/airbrake-java-2.2.0.jar)
- * [log4j-1.2.14](https://github.com/airbrake/airbrake-java/raw/master/maven2/airbrake/airbrake-java/2.2.0/airbrake-java-2.2.0.jar)
+ * [airbrake-java-2.2](https://github.com/airbrake/airbrake-java/blob/master/maven2/io/airbrake/airbrake-java/2.2.0/airbrake-java-2.2.0.jar?raw=true)
+ * [log4j-1.2.14](https://github.com/airbrake/airbrake-java/blob/master/maven2/log4j/1.2.14/log4j-1.2.14.jar?raw=true)
 
 Log4j
 -----
