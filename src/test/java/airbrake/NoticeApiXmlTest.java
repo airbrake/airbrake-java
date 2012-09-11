@@ -41,7 +41,7 @@ public class NoticeApiXmlTest {
 
 	@Test
 	public void testErrorBacktraceLine() {
-		assertThat(xml(new NoticeXml(notice)), containsString("<line method=org.junit.runners.BlockJUnit4ClassRunner.runChild file=BlockJUnit4ClassRunner.java number=76/>"));
+		assertThat(xml(new NoticeXml(notice)), containsString("<line method=org.junit.runners.BlockJUnit4ClassRunner.runChild file=BlockJUnit4ClassRunner.java number="));
 	}
 
 	@Test

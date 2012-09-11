@@ -146,7 +146,7 @@ public class AirbrakeNotifierTest {
 	@Test
 	public void testSendExceptionToairbrakeUsingRubyBacktraceAndFilteredSystemProperties() {
 		final Exception EXCEPTION = newException(ERROR_MESSAGE);
-		final AirbrakeNotice notice = new AirbrakeNoticeBuilderUsingFilteredSystemProperties(API_KEY, new RubyBacktrace(), EXCEPTION, "test").newNotice();
+		final AirbrakeNotice notice = new AirbrakeNoticeBuilderUsingFilteredSystemProperties(API_KEY, new RubyBacktrace(), EXCEPTION, "test", null).newNotice();
 
 		assertThat(notifier.notify(notice), is(200));
 	}

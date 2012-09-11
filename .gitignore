@@ -5,3 +5,5 @@ target
 BACKLOG
 FEFLOG
 TODO
+bin
+.checkstyle
