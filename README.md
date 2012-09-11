@@ -38,13 +38,26 @@ Log4j
 	log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
 	log4j.appender.stdout.layout.ConversionPattern=[%d,%p] [%c{1}.%M:%L] %m%n
 
-	log4j.appender.airbrake=code.lucamarrocco.airbrake.AirbrakeAppender	
+	log4j.appender.airbrake=airbrake.AirbrakeAppender	
 	log4j.appender.airbrake.api_key=YOUR_AIRBRAKE_API_KEY
 	#log4j.appender.airbrake.env=development
 	#log4j.appender.airbrake.env=production
 	log4j.appender.airbrake.env=test
 	log4j.appender.airbrake.enabled=true
+	#log4j.appender.airbrake.host=my.other.airbrake.host.io
 
+or in XML format:
+
+	<appender name="AIRBRAKE" class="airbrake.AirbrakeAppender">
+		<param name="api_key" value="YOUR_AIRBRAKE_API_KEY"/>
+		<param name="env" value="test"/>
+		<param name="enabled" value="true"/>
+		<!-- <param name="host" value="my.other.airbrake.host.io" /> -->
+	</appender>
+
+	<root>
+		<appender-ref ref="AIRBRAKE"/>
+	</root>
 
 Directly
 ------------------------------
