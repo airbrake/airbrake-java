@@ -44,19 +44,20 @@ Log4j
 	#log4j.appender.airbrake.env=production
 	log4j.appender.airbrake.env=test
 	log4j.appender.airbrake.enabled=true
-  #log4j.appender.airbrake.host=my.other.airbrake.host.io
+	#log4j.appender.airbrake.host=my.other.airbrake.host.io
 
-  or in XML format:
-  <appender name="AIRBRAKE" class="airbrake.AirbrakeAppender">
-    <param name="api_key" value="YOUR_AIRBRAKE_API_KEY"/>
-    <param name="env" value="test"/>
-    <param name="enabled" value="true"/>
-    <!-- <param name="host" value="my.other.airbrake.host.io" /> -->
-  </appender>
+or in XML format:
 
-  <root>
-    <appender-ref ref="AIRBRAKE"/>
-  </root>
+	<appender name="AIRBRAKE" class="airbrake.AirbrakeAppender">
+		<param name="api_key" value="YOUR_AIRBRAKE_API_KEY"/>
+		<param name="env" value="test"/>
+		<param name="enabled" value="true"/>
+		<!-- <param name="host" value="my.other.airbrake.host.io" /> -->
+	</appender>
+
+	<root>
+		<appender-ref ref="AIRBRAKE"/>
+	</root>
 
 Directly
 ------------------------------
