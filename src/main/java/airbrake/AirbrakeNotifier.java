@@ -16,8 +16,10 @@ public class AirbrakeNotifier {
 		connection.setRequestMethod("POST");
 	}
 
-	private HttpURLConnection createConnection(String host) throws IOException {
-		return (HttpURLConnection) new URL("http://" + host + "/notifier_api/v2/notices").openConnection();
+	private HttpURLConnection createConnection(String protocol, String host) throws IOException {
+	    String url = protocol+"://" + host + "/notifier_api/v2/notices";
+	    System.out.println("CALL URL="+url);
+		return (HttpURLConnection) new URL(url).openConnection();
 	}
 
 	private void err(final AirbrakeNotice notice, final Exception e) {
@@ -26,7 +28,7 @@ public class AirbrakeNotifier {
 
 	public int notify(final AirbrakeNotice notice) {
 		try {
-			final HttpURLConnection toairbrake = createConnection(notice.host());
+			final HttpURLConnection toairbrake = createConnection(notice.protocol(), notice.host());
 			addingProperties(toairbrake);
 			String toPost = new NoticeXml(notice).toString();
 			return send(toPost, toairbrake);

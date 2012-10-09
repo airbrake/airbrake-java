@@ -45,6 +45,7 @@ Log4j
 	log4j.appender.airbrake.env=test
 	log4j.appender.airbrake.enabled=true
 	#log4j.appender.airbrake.host=my.other.airbrake.host.io
+    #log4j.appender.airbrake.protocol=https
 
 or in XML format:
 
@@ -53,6 +54,7 @@ or in XML format:
 		<param name="env" value="test"/>
 		<param name="enabled" value="true"/>
 		<!-- <param name="host" value="my.other.airbrake.host.io" /> -->
+        <!-- <param name="protocol" value="https" /> -->
 	</appender>
 
 	<root>

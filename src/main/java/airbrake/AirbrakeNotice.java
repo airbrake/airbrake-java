@@ -36,9 +36,11 @@ public class AirbrakeNotice {
 
 	private String host;
 
+	private String protocol;
+	
 	public AirbrakeNotice(final String apiKey, String projectRoot, String environmentName, final String errorMessage, String errorClass,
 			final Backtrace backtrace, final Map<String, Object> request, final Map<String, Object> session, final Map<String, Object> environment,
-			final List<String> environmentFilters, boolean hasRequest, String url, String component, String host) {
+			final List<String> environmentFilters, boolean hasRequest, String url, String component, String host, String protocol) {
 		this.apiKey = apiKey;
 		this.projectRoot = projectRoot;
 		this.environmentName = environmentName;
@@ -51,6 +53,7 @@ public class AirbrakeNotice {
 		this.url = url;
 		this.component = component;
 		this.host = host;
+		this.protocol = protocol;
 		filter(environment, environmentFilters);
 	}
 
@@ -119,5 +122,9 @@ public class AirbrakeNotice {
 	
 	public String host() {
 		return host;
+	}
+	
+	public String protocol() {
+	    return protocol;
 	}
 }

@@ -41,17 +41,24 @@ public class AirbrakeNoticeBuilder {
 
 	private String host;
 
+	private String protocol;
+	
 	final static String DEFAULT_HOST = "api.airbrake.io";
-
-	public AirbrakeNoticeBuilder(final String apiKey, final Backtrace backtraceBuilder, final Throwable throwable, final String env, final String host) {
-		this(apiKey, throwable.getMessage(), env, host);
+	final static String DEFAULT_PROTOCOL = "http";
+	
+	public AirbrakeNoticeBuilder(final String apiKey, final Backtrace backtraceBuilder, final Throwable throwable, final String env, final String host, final String protocol) {
+		this(apiKey, throwable.getMessage(), env, host, protocol);
 		this.backtraceBuilder = backtraceBuilder;
 		errorClass(throwable);
 		backtrace(throwable);
 	}
 
+	public AirbrakeNoticeBuilder(final String apiKey, final Backtrace backtraceBuilder, final Throwable throwable, final String env, final String host) {
+	    this(apiKey, backtraceBuilder, throwable, env, null, null);
+	}
+
 	public AirbrakeNoticeBuilder(final String apiKey, final Backtrace backtraceBuilder, final Throwable throwable, final String env) {
-		this(apiKey, backtraceBuilder, throwable, env, null);
+		this(apiKey, backtraceBuilder, throwable, env, null, null);
 	}
 
 	public AirbrakeNoticeBuilder(final String apiKey, final String errorMessage) {
@@ -63,10 +70,15 @@ public class AirbrakeNoticeBuilder {
 	}
 
 	public AirbrakeNoticeBuilder(final String apiKey, final String errorMessage, final String env, String host) {
-		apiKey(apiKey);
-		errorMessage(errorMessage);
-		env(env);
-		host(host);
+	    this(apiKey, errorMessage, env, host, null);
+	}
+
+	public AirbrakeNoticeBuilder(final String apiKey, final String errorMessage, final String env, String host, String protocol) {
+	    apiKey(apiKey);
+	    errorMessage(errorMessage);
+	    env(env);
+	    host(host);
+	    protocol(protocol);
 	}
 
 	public AirbrakeNoticeBuilder(final String apiKey, final Throwable throwable) {
@@ -130,12 +142,20 @@ public class AirbrakeNoticeBuilder {
     		    this.host = host;
     		}
         }
-	
+        
 	/** A hash of the environment data that existed when the error occurred (required, but can be empty). */
 	protected void environment(final Map<String, Object> environment) {
 		this.environment.putAll(environment);
 	}
 
+	private void protocol(String protocol) {
+	    if (notDefined(protocol)) {
+	        this.protocol = DEFAULT_PROTOCOL;
+	    } else {
+	        this.protocol = protocol;
+	    }
+	}
+	
 	protected void environment(Properties properties) {
 		for (Entry<Object, Object> property : properties.entrySet()) {
 			this.environment.put(property.getKey().toString(), property.getValue());
@@ -177,7 +197,7 @@ public class AirbrakeNoticeBuilder {
 
 	public AirbrakeNotice newNotice() {
 		return new AirbrakeNotice(apiKey, projectRoot, environmentName, errorMessage, errorClass, backtrace, request, session, environment, environmentFilters,
-				hasRequest, url, component, host);
+				hasRequest, url, component, host, protocol);
 	}
 
 	private boolean notDefined(final Object object) {

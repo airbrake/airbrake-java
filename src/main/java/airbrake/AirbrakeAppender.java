@@ -21,6 +21,8 @@ public class AirbrakeAppender extends AppenderSkeleton {
 
 	private String host;
 
+	private String protocol;
+	
 	public AirbrakeAppender() {
 		setThreshold(Level.ERROR);
 	}
@@ -47,7 +49,7 @@ public class AirbrakeAppender extends AppenderSkeleton {
 	public void close() {}
 
 	public AirbrakeNotice newNoticeFor(final Throwable throwable) {
-		return new AirbrakeNoticeBuilderUsingFilteredSystemProperties(apiKey, backtrace, throwable, env, host).newNotice();
+		return new AirbrakeNoticeBuilderUsingFilteredSystemProperties(apiKey, backtrace, throwable, env, host, protocol).newNotice();
 	}
 
 	private int notifyThrowableIn(final LoggingEvent loggingEvent) {
@@ -79,6 +81,10 @@ public class AirbrakeAppender extends AppenderSkeleton {
 		this.host = host;
 	}
 
+	public void setProtocol(String protocol) {
+	    this.protocol = protocol;
+	}
+	
 	private boolean thereIsThrowableIn(final LoggingEvent loggingEvent) {
 		return loggingEvent.getThrowableInformation() != null;
 	}
