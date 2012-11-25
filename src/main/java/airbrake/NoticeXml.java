@@ -65,24 +65,6 @@ public class NoticeXml {
 		end("request");
 	}
 
-	private void vars(String sectionName, Map<String, Object> vars) {
-		if (vars.isEmpty()) {
-			return;
-		}
-
-		tag(sectionName);
-		for (Entry<String, Object> var : vars.entrySet()) {
-			append("<var key=\"" + var.getKey() + "\">");
-			text(var.getValue().toString());
-			append("</var>");
-		}
-		end(sectionName);
-	}
-
-	private void request() {
-		tag("request");
-	}
-
 	private void apikey(AirbrakeNotice notice) {
 		tag("api-key");
 		{
@@ -107,10 +89,6 @@ public class NoticeXml {
 		tag("error");
 	}
 
-	private void server_environment() {
-		tag("server-environment");
-	}
-
 	private void line(String backtrace) {
 		append(new BacktraceLine(backtrace).toXml());
 	}
@@ -126,6 +104,14 @@ public class NoticeXml {
 
 	private void notifier() {
 		tag("notifier");
+	}
+
+	private void request() {
+		tag("request");
+	}
+
+	private void server_environment() {
+		tag("server-environment");
 	}
 
 	private NoticeXml tag(String string) {
@@ -150,6 +136,20 @@ public class NoticeXml {
 
 	private void url(String url) {
 		tag("url", url);
+	}
+
+	private void vars(String sectionName, Map<String, Object> vars) {
+		if (vars.isEmpty()) {
+			return;
+		}
+
+		tag(sectionName);
+		for (Entry<String, Object> var : vars.entrySet()) {
+			append("<var key=\"" + var.getKey() + "\">");
+			text(var.getValue().toString());
+			append("</var>");
+		}
+		end(sectionName);
 	}
 
 	private void version(String version) {

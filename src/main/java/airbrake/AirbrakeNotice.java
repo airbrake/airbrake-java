@@ -34,8 +34,7 @@ public class AirbrakeNotice {
 
 	private final String component;
 
-	public AirbrakeNotice(final String apiKey, String projectRoot, String environmentName, final String errorMessage, String errorClass,
-			final Backtrace backtrace, final Map<String, Object> request, final Map<String, Object> session, final Map<String, Object> environment,
+	public AirbrakeNotice(final String apiKey, String projectRoot, String environmentName, final String errorMessage, String errorClass, final Backtrace backtrace, final Map<String, Object> request, final Map<String, Object> session, final Map<String, Object> environment,
 			final List<String> environmentFilters, boolean hasRequest, String url, String component) {
 		this.apiKey = apiKey;
 		this.projectRoot = projectRoot;
@@ -57,6 +56,10 @@ public class AirbrakeNotice {
 
 	public Backtrace backtrace() {
 		return backtrace;
+	}
+
+	public String component() {
+		return component;
 	}
 
 	public String env() {
@@ -83,11 +86,20 @@ public class AirbrakeNotice {
 		}
 	}
 
+	public boolean hasRequest() {
+		return hasRequest;
+	}
+
 	private boolean matches(final List<String> environmentFilters, final String key) {
 		for (final String filter : environmentFilters) {
-			if (key.matches(filter)) return true;
+			if (key.matches(filter))
+				return true;
 		}
 		return false;
+	}
+
+	public String projectRoot() {
+		return projectRoot;
 	}
 
 	public Map<String, Object> request() {
@@ -98,19 +110,7 @@ public class AirbrakeNotice {
 		return session;
 	}
 
-	public boolean hasRequest() {
-		return hasRequest;
-	}
-
 	public String url() {
 		return url;
-	}
-
-	public String component() {
-		return component;
-	}
-
-	public String projectRoot() {
-		return projectRoot;
 	}
 }

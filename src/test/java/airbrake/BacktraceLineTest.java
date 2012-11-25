@@ -24,14 +24,13 @@ public class BacktraceLineTest {
 	@Test
 	public void testBacktraceLineToXml() {
 		BacktraceLine backtraceLine = new BacktraceLine("org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference", "JUnit4TestReference.java", 46, "run");
-		assertEquals("<line method=\"org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run\" file=\"JUnit4TestReference.java\" number=\"46\"/>",
-				backtraceLine.toXml());
+		assertEquals("<line method=\"org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run\" file=\"JUnit4TestReference.java\" number=\"46\"/>", backtraceLine.toXml());
 	}
 
-	@Test @Ignore
+	@Test
+	@Ignore
 	public void testEscapeSpecialCharsInXml() {
 		BacktraceLine backtraceLine = new BacktraceLine("at com.company.Foo$$FastClassByCGLIB$$b505b4f2.invoke(<generated'\">:-1)");
-		assertEquals("<line method=\"com.company.Foo$$FastClassByCGLIB$$b505b4f2.invoke\" file=\"&lt;generated&apos;&quot;&gt;\" number=\"-1\"/>",
-				backtraceLine.toXml());
+		assertEquals("<line method=\"com.company.Foo$$FastClassByCGLIB$$b505b4f2.invoke\" file=\"&lt;generated&apos;&quot;&gt;\" number=\"-1\"/>", backtraceLine.toXml());
 	}
 }

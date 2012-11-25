@@ -18,7 +18,8 @@ public class Backtrace implements Iterable<String> {
 
 	private final List<String> filteredBacktrace = new LinkedList<String>();
 
-	protected Backtrace() {}
+	protected Backtrace() {
+	}
 
 	public Backtrace(final List<String> backtrace) {
 		this.backtrace.addAll(backtrace);
@@ -164,7 +165,8 @@ public class Backtrace implements Iterable<String> {
 
 	private boolean mustBeIgnored(final String string) {
 		for (final String ignore : ignoreRules) {
-			if (string.matches(ignore)) return true;
+			if (string.matches(ignore))
+				return true;
 		}
 		return false;
 	}
@@ -190,7 +192,8 @@ public class Backtrace implements Iterable<String> {
 	}
 
 	private void toBacktrace(final Throwable throwable) {
-		if (throwable == null) return;
+		if (throwable == null)
+			return;
 
 		backtrace.add(causedBy(throwable));
 		for (final StackTraceElement element : throwable.getStackTrace()) {

@@ -8,7 +8,7 @@ import org.apache.log4j.*;
 import org.apache.log4j.spi.*;
 
 public class AirbrakeAppender extends AppenderSkeleton {
-	
+
 	private final AirbrakeNotifier airbrakeNotifier = new AirbrakeNotifier();
 
 	private String apiKey;
@@ -19,24 +19,25 @@ public class AirbrakeAppender extends AppenderSkeleton {
 
 	private Backtrace backtrace = new QuietRubyBacktrace();
 
-	private String host;
-
 	public AirbrakeAppender() {
 		setThreshold(Level.ERROR);
 	}
 
 	public AirbrakeAppender(final String apiKey) {
 		setApi_key(apiKey);
+		setThreshold(Level.ERROR);
 	}
 
 	public AirbrakeAppender(final String apiKey, final Backtrace backtrace) {
 		setApi_key(apiKey);
 		setBacktrace(backtrace);
+		setThreshold(Level.ERROR);
 	}
 
 	@Override
 	protected void append(final LoggingEvent loggingEvent) {
-		if (!enabled) return;
+		if (!enabled)
+			return;
 
 		if (thereIsThrowableIn(loggingEvent)) {
 			notifyThrowableIn(loggingEvent);
@@ -44,10 +45,11 @@ public class AirbrakeAppender extends AppenderSkeleton {
 	}
 
 	@Override
-	public void close() {}
+	public void close() {
+	}
 
 	public AirbrakeNotice newNoticeFor(final Throwable throwable) {
-		return new AirbrakeNoticeBuilderUsingFilteredSystemProperties(apiKey, backtrace, throwable, env, host).newNotice();
+		return new AirbrakeNoticeBuilderUsingFilteredSystemProperties(apiKey, backtrace, throwable, env).newNotice();
 	}
 
 	private int notifyThrowableIn(final LoggingEvent loggingEvent) {
@@ -75,15 +77,18 @@ public class AirbrakeAppender extends AppenderSkeleton {
 		this.env = env;
 	}
 
-	public void setHost(String host) {
-		this.host = host;
+	public void setNoticesUrl(final String noticesUrl) {
+		airbrakeNotifier.setNoticesUrl(noticesUrl);
 	}
 
 	private boolean thereIsThrowableIn(final LoggingEvent loggingEvent) {
-		return loggingEvent.getThrowableInformation() != null;
+		return loggingEvent.getMessage() != null;
 	}
 
 	private Throwable throwable(final LoggingEvent loggingEvent) {
-		return loggingEvent.getThrowableInformation().getThrowable();
+		Object message = loggingEvent.getMessage();
+		if (message instanceof Throwable)
+			return (Throwable) loggingEvent.getMessage();
+		return null;
 	}
 }

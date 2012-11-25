@@ -4,6 +4,7 @@
 
 package airbrake;
 
+import static airbrake.ApiKeys.*;
 import static airbrake.Exceptions.*;
 import static airbrake.Slurp.*;
 import static java.util.Arrays.*;
@@ -15,7 +16,6 @@ import java.util.*;
 import org.apache.commons.logging.*;
 import org.hamcrest.*;
 import org.junit.*;
-import static airbrake.ApiKeys.*;
 
 public class AirbrakeNotifierTest {
 
@@ -146,7 +146,7 @@ public class AirbrakeNotifierTest {
 	@Test
 	public void testSendExceptionToairbrakeUsingRubyBacktraceAndFilteredSystemProperties() {
 		final Exception EXCEPTION = newException(ERROR_MESSAGE);
-		final AirbrakeNotice notice = new AirbrakeNoticeBuilderUsingFilteredSystemProperties(API_KEY, new RubyBacktrace(), EXCEPTION, "test", null).newNotice();
+		final AirbrakeNotice notice = new AirbrakeNoticeBuilderUsingFilteredSystemProperties(API_KEY, new RubyBacktrace(), EXCEPTION, "test").newNotice();
 
 		assertThat(notifier.notify(notice), is(200));
 	}

@@ -8,12 +8,16 @@ import org.junit.*;
 
 public class NoticeApiXmlBuilderTest {
 
-	private String xml(AirbrakeNotice notice) {
-		NoticeXml noticeApi2 = new NoticeXml(notice);
-		return noticeApi2.toString();
+	private AirbrakeNoticeBuilder productionNoticeBuilder;
+
+	private RuntimeException newThrowable() {
+		return new RuntimeException("errorMessage");
 	}
 
-	private AirbrakeNoticeBuilder productionNoticeBuilder;
+	@Before
+	public void setUp() {
+		productionNoticeBuilder = new AirbrakeNoticeBuilder(API_KEY, newThrowable(), "<blink>production</blink>");
+	}
 
 	@Test
 	public void testEscapesAngleBrackets() throws Exception {
@@ -45,12 +49,8 @@ public class NoticeApiXmlBuilderTest {
 		assertThat(xml(builder.newNotice()), containsString("<var key=\"lights\"><![CDATA[<blink>]]></var></session>"));
 	}
 
-	private RuntimeException newThrowable() {
-		return new RuntimeException("errorMessage");
-	}
-
-	@Before
-	public void setUp() {
-		productionNoticeBuilder = new AirbrakeNoticeBuilder(API_KEY, newThrowable(), "<blink>production</blink>");
+	private String xml(AirbrakeNotice notice) {
+		NoticeXml noticeApi2 = new NoticeXml(notice);
+		return noticeApi2.toString();
 	}
 }

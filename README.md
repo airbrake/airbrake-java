@@ -17,7 +17,7 @@ Setting up with Maven
     		<dependency>
       		<groupId>io.airbrake</groupId>
       		<artifactId>airbrake-java</artifactId>
-      		<version>2.2.0</version>
+      		<version>2.2.1</version>
     		</dependency>
   		</dependencies>
 	</project>
@@ -26,7 +26,7 @@ Without Maven
 -------------
 
 you need to add these libraries to your classpath
- * [airbrake-java-2.2](https://github.com/airbrake/airbrake-java/blob/master/maven2/io/airbrake/airbrake-java/2.2.0/airbrake-java-2.2.0.jar?raw=true)
+ * [airbrake-java-2.2](https://github.com/airbrake/airbrake-java/blob/master/maven2/io/airbrake/airbrake-java/2.2.1/airbrake-java-2.2.1.jar?raw=true)
  * [log4j-1.2.14](https://github.com/airbrake/airbrake-java/blob/master/maven2/log4j/1.2.14/log4j-1.2.14.jar?raw=true)
 
 Log4j
@@ -44,7 +44,7 @@ Log4j
 	#log4j.appender.airbrake.env=production
 	log4j.appender.airbrake.env=test
 	log4j.appender.airbrake.enabled=true
-	#log4j.appender.airbrake.host=my.other.airbrake.host.io
+  #log4j.appender.airbrake.noticesUrl=http://api.airbrake.io/notifier_api/v2/notices
 
 or in XML format:
 
@@ -52,7 +52,7 @@ or in XML format:
 		<param name="api_key" value="YOUR_AIRBRAKE_API_KEY"/>
 		<param name="env" value="test"/>
 		<param name="enabled" value="true"/>
-		<!-- <param name="host" value="my.other.airbrake.host.io" /> -->
+    <!-- <param name="noticesUrl" value="http://api.airbrake.io/notifier_api/v2/notices" /> -->
 	</appender>
 
 	<root>
@@ -70,6 +70,19 @@ Directly
   		AirbrakeNotifier notifier = new AirbrakeNotifier();
   		notifier.notify(notice);
 	}
+
+if you need to specifiy a different url to send notice you can create new notifier with this url:
+
+	try {
+  		doSomethingThatThrowAnException();
+	}
+	catch(Throwable t) {
+  		AirbrakeNotice notice = new AirbrakeNoticeBuilder(YOUR_AIRBRAKE_API_KEY, t, "env").newNotice();
+  		AirbrakeNotifier notifier = new AirbrakeNotifier("http://api.airbrake.io/notifier_api/v2/notices");
+  		notifier.notify(notice);
+	}
+
+
 	
 
 Support

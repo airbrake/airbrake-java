@@ -39,47 +39,40 @@ public class AirbrakeNoticeBuilder {
 
 	private String component;
 
-	private String host;
-
 	final static String DEFAULT_HOST = "api.airbrake.io";
 
-	public AirbrakeNoticeBuilder(final String apiKey, final Backtrace backtraceBuilder, final Throwable throwable, final String env, final String host) {
-		this(apiKey, throwable.getMessage(), env, host);
+	public AirbrakeNoticeBuilder(final String apiKey, final Backtrace backtraceBuilder, final Throwable throwable, final String env) {
+		this(apiKey, throwable.getMessage(), env);
 		this.backtraceBuilder = backtraceBuilder;
 		errorClass(throwable);
 		backtrace(throwable);
 	}
 
-	public AirbrakeNoticeBuilder(final String apiKey, final Backtrace backtraceBuilder, final Throwable throwable, final String env) {
-		this(apiKey, backtraceBuilder, throwable, env, null);
-	}
-
 	public AirbrakeNoticeBuilder(final String apiKey, final String errorMessage) {
-		this(apiKey, errorMessage, "test", null);
+		this(apiKey, errorMessage, "test");
 	}
 
 	public AirbrakeNoticeBuilder(final String apiKey, final String errorMessage, final String env) {
-		this(apiKey, errorMessage, env, null);
-	}
-
-	public AirbrakeNoticeBuilder(final String apiKey, final String errorMessage, final String env, String host) {
 		apiKey(apiKey);
 		errorMessage(errorMessage);
 		env(env);
-		host(host);
 	}
 
 	public AirbrakeNoticeBuilder(final String apiKey, final Throwable throwable) {
-		this(apiKey, new Backtrace(), throwable, "test", null);
+		this(apiKey, new Backtrace(), throwable, "test");
 	}
 
 	public AirbrakeNoticeBuilder(final String apiKey, final Throwable throwable, final String env) {
-		this(apiKey, new Backtrace(), throwable, env, null);
+		this(apiKey, new Backtrace(), throwable, env);
 	}
 
 	public AirbrakeNoticeBuilder(final String apiKey, final Throwable throwable, final String projectRoot, final String env) {
-		this(apiKey, new Backtrace(), throwable, env, null);
+		this(apiKey, new Backtrace(), throwable, env);
 		projectRoot(projectRoot);
+	}
+
+	protected void addSessionKey(String key, Object value) {
+		session.put(key, value);
 	}
 
 	private void apiKey(final String apiKey) {
@@ -89,17 +82,10 @@ public class AirbrakeNoticeBuilder {
 		this.apiKey = apiKey;
 	}
 
-	protected void setRequest(String url, String component) {
-		hasRequest = true;
-		this.url = url;
-		this.component = component;
-	}
-
-	protected void addSessionKey(String key, Object value) {
-		session.put(key, value);
-	}
-
-	/** An array where each element is a line of the backtrace (required, but can be empty). */
+	/**
+	 * An array where each element is a line of the backtrace (required, but can
+	 * be empty).
+	 */
 	protected void backtrace(final Backtrace backtrace) {
 		this.backtrace = backtrace;
 	}
@@ -115,23 +101,14 @@ public class AirbrakeNoticeBuilder {
 		environmentFilter("EC2_CERT");
 	}
 
-	protected void projectRoot(final String projectRoot) {
-		this.projectRoot = projectRoot;
-	}
-
 	private void env(final String env) {
 		environmentName = env;
 	}
 
-        private void host(String host) {
-    		if (notDefined(host)) {
-    		    this.host = DEFAULT_HOST;
-    		} else {
-    		    this.host = host;
-    		}
-        }
-	
-	/** A hash of the environment data that existed when the error occurred (required, but can be empty). */
+	/**
+	 * A hash of the environment data that existed when the error occurred
+	 * (required, but can be empty).
+	 */
 	protected void environment(final Map<String, Object> environment) {
 		this.environment.putAll(environment);
 	}
@@ -176,22 +153,37 @@ public class AirbrakeNoticeBuilder {
 	}
 
 	public AirbrakeNotice newNotice() {
-		return new AirbrakeNotice(apiKey, projectRoot, environmentName, errorMessage, errorClass, backtrace, request, session, environment, environmentFilters,
-				hasRequest, url, component);
+		return new AirbrakeNotice(apiKey, projectRoot, environmentName, errorMessage, errorClass, backtrace, request, session, environment, environmentFilters, hasRequest, url, component);
 	}
 
 	private boolean notDefined(final Object object) {
 		return object == null;
 	}
 
-	/** A hash of the request parameters that were given when the error occurred (required, but can be empty). */
+	protected void projectRoot(final String projectRoot) {
+		this.projectRoot = projectRoot;
+	}
+
+	/**
+	 * A hash of the request parameters that were given when the error occurred
+	 * (required, but can be empty).
+	 */
 	protected void request(final Map<String, Object> request) {
 		this.request = request;
 	}
 
-	/** A hash of the session data that existed when the error occurred (required, but can be empty). */
+	/**
+	 * A hash of the session data that existed when the error occurred
+	 * (required, but can be empty).
+	 */
 	protected void session(final Map<String, Object> session) {
 		this.session.putAll(session);
+	}
+
+	protected void setRequest(String url, String component) {
+		hasRequest = true;
+		this.url = url;
+		this.component = component;
 	}
 
 	protected void standardEnvironmentFilters() {

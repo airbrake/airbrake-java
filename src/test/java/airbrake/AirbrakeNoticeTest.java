@@ -84,7 +84,7 @@ public class AirbrakeNoticeTest {
 
 	@Test
 	public void testNewairbrakeUsingBuilderNoticeWithBacktraceWithHost_shouldUseTheHost() {
-		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, ERROR_MESSAGE, "test", "your.proxy.to.airbrake.com") {
+		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, ERROR_MESSAGE, "test") {
 			{
 				backtrace(BACKTRACE);
 			}

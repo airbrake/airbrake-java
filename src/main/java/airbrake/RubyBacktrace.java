@@ -34,7 +34,8 @@ public class RubyBacktrace extends Backtrace {
 		} else {
 			filteredFileName = "";
 		}
-		if (className.matches(".*\\." + filteredFileName)) return MessageFormat.format("at {0}.java:{1}:in `{2}''", className, lineNumber, methodName);
+		if (className.matches(".*\\." + filteredFileName))
+			return MessageFormat.format("at {0}.java:{1}:in `{2}''", className, lineNumber, methodName);
 		return MessageFormat.format("at {0}, {1}:{2}:in `{3}''", className, fileName, lineNumber, methodName);
 	}
 

@@ -9,21 +9,31 @@ import java.net.*;
 
 public class AirbrakeNotifier {
 
+	public static String slurp(InputStream stream) {
+		try {
+			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+			byte[] buff = new byte[4096];
+			for (int len; (len = stream.read(buff)) != -1;) {
+				outputStream.write(buff, 0, len);
+			}
+			return outputStream.toString();
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	private String noticesUrl;
 
 	public AirbrakeNotifier() {
 		setNoticesUrl("http://api.airbrake.io/notifier_api/v2/notices");
 	}
 
-	private void setNoticesUrl(String noticesUrl) {
-		this.noticesUrl = noticesUrl;
-	}
-
 	public AirbrakeNotifier(String noticesUrl) {
 		setNoticesUrl(noticesUrl);
 	}
 
-	private void addingProperties(final HttpURLConnection connection) throws ProtocolException {
+	private void addingPropertiesTo(final HttpURLConnection connection) throws ProtocolException {
 		connection.setDoOutput(true);
 		connection.setRequestProperty("Content-type", "text/xml");
 		connection.setRequestProperty("Accept", "text/xml, application/xml");
@@ -34,29 +44,31 @@ public class AirbrakeNotifier {
 		return (HttpURLConnection) new URL(noticesUrl).openConnection();
 	}
 
-	private void err(final AirbrakeNotice notice, final Exception e) {
-		e.printStackTrace();
-	}
-
 	public int notify(final AirbrakeNotice notice) {
 		try {
-			final HttpURLConnection toairbrake = createConnection();
-			addingProperties(toairbrake);
-			String toPost = new NoticeXml(notice).toString();
-			return send(toPost, toairbrake);
+			final HttpURLConnection airbrakeConnection = createConnection();
+			addingPropertiesTo(airbrakeConnection);
+			String noticeXml = new NoticeXml(notice).toString();
+			return send(noticeXml, airbrakeConnection);
 		} catch (final Exception e) {
-			err(notice, e);
+			preintStackTrace(notice, e);
 		}
 		return 0;
 	}
 
-	private int send(final String yaml, final HttpURLConnection connection) throws IOException {
-		int statusCode;
+	private void preintStackTrace(final AirbrakeNotice notice, final Exception e) {
+		e.printStackTrace();
+	}
+
+	private int send(final String xml, final HttpURLConnection connection) throws IOException {
 		final OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
-		writer.write(yaml);
+		writer.write(xml);
 		writer.close();
-		statusCode = connection.getResponseCode();
+		int statusCode = connection.getResponseCode();
 		return statusCode;
 	}
 
+	public void setNoticesUrl(String noticesUrl) {
+		this.noticesUrl = noticesUrl;
+	}
 }
