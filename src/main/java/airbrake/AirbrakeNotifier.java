@@ -23,14 +23,14 @@ public class AirbrakeNotifier {
 		}
 	}
 
-	private String noticesUrl;
+	private String url;
 
 	public AirbrakeNotifier() {
-		setNoticesUrl("http://api.airbrake.io/notifier_api/v2/notices");
+		setUrl("http://api.airbrake.io/notifier_api/v2/notices");
 	}
 
-	public AirbrakeNotifier(String noticesUrl) {
-		setNoticesUrl(noticesUrl);
+	public AirbrakeNotifier(String url) {
+		setUrl(url);
 	}
 
 	private void addingPropertiesTo(final HttpURLConnection connection) throws ProtocolException {
@@ -41,7 +41,7 @@ public class AirbrakeNotifier {
 	}
 
 	private HttpURLConnection createConnection() throws IOException {
-		return (HttpURLConnection) new URL(noticesUrl).openConnection();
+		return (HttpURLConnection) new URL(url).openConnection();
 	}
 
 	public int notify(final AirbrakeNotice notice) {
@@ -68,7 +68,7 @@ public class AirbrakeNotifier {
 		return statusCode;
 	}
 
-	public void setNoticesUrl(String noticesUrl) {
-		this.noticesUrl = noticesUrl;
+	public void setUrl(String url) {
+		this.url = url;
 	}
 }

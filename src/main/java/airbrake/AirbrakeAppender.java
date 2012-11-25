@@ -77,8 +77,8 @@ public class AirbrakeAppender extends AppenderSkeleton {
 		this.env = env;
 	}
 
-	public void setNoticesUrl(final String noticesUrl) {
-		airbrakeNotifier.setNoticesUrl(noticesUrl);
+	public void setUrl(final String url) {
+		airbrakeNotifier.setUrl(url);
 	}
 
 	private boolean thereIsThrowableIn(final LoggingEvent loggingEvent) {
