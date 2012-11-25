@@ -9,6 +9,20 @@ import java.net.*;
 
 public class AirbrakeNotifier {
 
+	private String noticesUrl;
+
+	public AirbrakeNotifier() {
+		setNoticesUrl("http://api.airbrake.io/notifier_api/v2/notices");
+	}
+
+	private void setNoticesUrl(String noticesUrl) {
+		this.noticesUrl = noticesUrl;
+	}
+
+	public AirbrakeNotifier(String noticesUrl) {
+		setNoticesUrl(noticesUrl);
+	}
+
 	private void addingProperties(final HttpURLConnection connection) throws ProtocolException {
 		connection.setDoOutput(true);
 		connection.setRequestProperty("Content-type", "text/xml");
@@ -16,8 +30,8 @@ public class AirbrakeNotifier {
 		connection.setRequestMethod("POST");
 	}
 
-	private HttpURLConnection createConnection(String host) throws IOException {
-		return (HttpURLConnection) new URL("http://" + host + "/notifier_api/v2/notices").openConnection();
+	private HttpURLConnection createConnection() throws IOException {
+		return (HttpURLConnection) new URL(noticesUrl).openConnection();
 	}
 
 	private void err(final AirbrakeNotice notice, final Exception e) {
@@ -26,7 +40,7 @@ public class AirbrakeNotifier {
 
 	public int notify(final AirbrakeNotice notice) {
 		try {
-			final HttpURLConnection toairbrake = createConnection(notice.host());
+			final HttpURLConnection toairbrake = createConnection();
 			addingProperties(toairbrake);
 			String toPost = new NoticeXml(notice).toString();
 			return send(toPost, toairbrake);

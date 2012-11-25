@@ -80,9 +80,8 @@ public class AirbrakeNoticeTest {
 		assertThat(notice.apiKey(), is(API_KEY));
 		assertThat(notice.errorMessage(), is(ERROR_MESSAGE));
 		assertThat(notice.backtrace(), is(BACKTRACE));
-	        assertThat(notice.host(), is(AirbrakeNoticeBuilder.DEFAULT_HOST));
 	}
-	
+
 	@Test
 	public void testNewairbrakeUsingBuilderNoticeWithBacktraceWithHost_shouldUseTheHost() {
 		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, ERROR_MESSAGE, "test", "your.proxy.to.airbrake.com") {
@@ -92,7 +91,6 @@ public class AirbrakeNoticeTest {
 		}.newNotice();
 
 		assertThat(notice, is(notNullValue()));
-		assertThat(notice.host(), is("your.proxy.to.airbrake.com"));
 	}
 
 	@Test
@@ -132,7 +130,8 @@ public class AirbrakeNoticeTest {
 	@Test
 	public void testNewairbrakeUsingBuilderNoticeWithErrorMessage() {
 		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, ERROR_MESSAGE) {
-			{}
+			{
+			}
 		}.newNotice();
 
 		assertThat(notice, is(notNullValue()));

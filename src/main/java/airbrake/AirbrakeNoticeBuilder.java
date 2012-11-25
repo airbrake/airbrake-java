@@ -177,7 +177,7 @@ public class AirbrakeNoticeBuilder {
 
 	public AirbrakeNotice newNotice() {
 		return new AirbrakeNotice(apiKey, projectRoot, environmentName, errorMessage, errorClass, backtrace, request, session, environment, environmentFilters,
-				hasRequest, url, component, host);
+				hasRequest, url, component);
 	}
 
 	private boolean notDefined(final Object object) {
