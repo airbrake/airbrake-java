@@ -39,8 +39,6 @@ public class AirbrakeNoticeBuilder {
 
 	private String component;
 
-	final static String DEFAULT_HOST = "api.airbrake.io";
-
 	public AirbrakeNoticeBuilder(final String apiKey, final Backtrace backtraceBuilder, final Throwable throwable, final String env) {
 		this(apiKey, throwable.getMessage(), env);
 		this.backtraceBuilder = backtraceBuilder;
