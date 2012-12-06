@@ -91,4 +91,16 @@ public class AirbrakeAppender extends AppenderSkeleton {
 			return (Throwable) loggingEvent.getMessage();
 		return null;
 	}
+
+	protected String getApiKey() {
+		return apiKey;
+	}
+	
+	public Backtrace getBacktrace() {
+		return backtrace;
+	}
+
+	protected String getEnv() {
+		return env;
+	}
 }
