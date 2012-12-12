@@ -49,6 +49,7 @@ public class AirbrakeNotifier {
 			final HttpURLConnection airbrakeConnection = createConnection();
 			addingPropertiesTo(airbrakeConnection);
 			String noticeXml = new NoticeXml(notice).toString();
+			System.out.println(noticeXml);
 			return send(noticeXml, airbrakeConnection);
 		} catch (final Exception e) {
 			preintStackTrace(notice, e);
