@@ -23,18 +23,6 @@ public class AirbrakeAppender extends AppenderSkeleton {
 		setThreshold(Level.ERROR);
 	}
 
-	public Backtrace getBacktrace() {
-		return backtrace;
-	}
-
-	public String getApiKey() {
-		return apiKey;
-	}
-
-	public String getEnv() {
-		return env;
-	}
-
 	public AirbrakeAppender(final String apiKey) {
 		setApi_key(apiKey);
 		setThreshold(Level.ERROR);
