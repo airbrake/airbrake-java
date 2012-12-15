@@ -5,6 +5,17 @@ import static org.junit.Assert.*;
 import org.junit.*;
 
 public class BacktraceLineTest {
+	
+	@Test
+	public void testBacktraceLineFromRubyBacktrace() {
+		BacktraceLine backtraceLine = new BacktraceLine("at org.springframework.web.servlet.FrameworkServlet.java:894:in `processRequest'");
+		assertEquals("org.springframework.web.servlet.FrameworkServlet", backtraceLine.className());
+		assertEquals("processRequest", backtraceLine.methodName());
+		assertEquals(894, backtraceLine.lineNumber());
+		assertEquals("FrameworkServlet.java", backtraceLine.fileName());
+		
+		System.out.println(backtraceLine.toXml());
+	}
 
 	@Test
 	public void testBacktraceLineFromString() {

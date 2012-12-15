@@ -56,7 +56,7 @@ public class AirbrakeNoticeTest {
 	}
 
 	@Test
-	public void testNewairbrakeUsingBuilderNoticeFromException() {
+	public void testNewAirbrakeUsingBuilderNoticeFromException() {
 		final Exception EXCEPTION = newException(ERROR_MESSAGE);
 		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, EXCEPTION).newNotice();
 
@@ -68,7 +68,7 @@ public class AirbrakeNoticeTest {
 	}
 
 	@Test
-	public void testNewairbrakeUsingBuilderNoticeWithBacktrace() {
+	public void testNewAirbrakeUsingBuilderNoticeWithBacktrace() {
 		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, ERROR_MESSAGE) {
 			{
 				backtrace(BACKTRACE);
@@ -83,7 +83,7 @@ public class AirbrakeNoticeTest {
 	}
 
 	@Test
-	public void testNewairbrakeUsingBuilderNoticeWithBacktraceWithHost_shouldUseTheHost() {
+	public void testNewAirbrakeUsingBuilderNoticeWithBacktraceWithHost_shouldUseTheHost() {
 		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, ERROR_MESSAGE, "test") {
 			{
 				backtrace(BACKTRACE);
@@ -94,7 +94,7 @@ public class AirbrakeNoticeTest {
 	}
 
 	@Test
-	public void testNewairbrakeUsingBuilderNoticeWithEc2FilteredEnvironmentWithSystemProperties() {
+	public void testNewAirbrakeUsingBuilderNoticeWithEc2FilteredEnvironmentWithSystemProperties() {
 
 		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, ERROR_MESSAGE) {
 
@@ -113,7 +113,7 @@ public class AirbrakeNoticeTest {
 	}
 
 	@Test
-	public void testNewairbrakeUsingBuilderNoticeWithEnvironment() {
+	public void testNewAirbrakeUsingBuilderNoticeWithEnvironment() {
 		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, ERROR_MESSAGE) {
 			{
 				environment(ENVIRONMENT);
@@ -128,7 +128,7 @@ public class AirbrakeNoticeTest {
 	}
 
 	@Test
-	public void testNewairbrakeUsingBuilderNoticeWithErrorMessage() {
+	public void testNewAirbrakeUsingBuilderNoticeWithErrorMessage() {
 		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, ERROR_MESSAGE) {
 			{
 			}
@@ -141,7 +141,7 @@ public class AirbrakeNoticeTest {
 	}
 
 	@Test
-	public void testNewairbrakeUsingBuilderNoticeWithFilteredEnvironment() {
+	public void testNewAirbrakeUsingBuilderNoticeWithFilteredEnvironment() {
 		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, ERROR_MESSAGE) {
 			{
 				environmentFilter("A_KEY");
@@ -154,7 +154,7 @@ public class AirbrakeNoticeTest {
 	}
 
 	@Test
-	public void testNewairbrakeUsingBuilderNoticeWithRequest() {
+	public void testNewAirbrakeUsingBuilderNoticeWithRequest() {
 		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, ERROR_MESSAGE) {
 			{
 				request(REQUEST);
@@ -169,7 +169,7 @@ public class AirbrakeNoticeTest {
 	}
 
 	@Test
-	public void testNewairbrakeUsingBuilderNoticeWithSession() {
+	public void testNewAirbrakeUsingBuilderNoticeWithSession() {
 		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, ERROR_MESSAGE) {
 			{
 				setRequest("http://localhost:3000/", "controller");
@@ -189,7 +189,7 @@ public class AirbrakeNoticeTest {
 	}
 
 	@Test
-	public void testNewairbrakeUsingBuilderNoticeWithStandardFilteredEnvironmentWithSystemProperties() {
+	public void testNewAirbrakeUsingBuilderNoticeWithStandardFilteredEnvironmentWithSystemProperties() {
 		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, ERROR_MESSAGE) {
 			{
 				environment(System.getProperties());
