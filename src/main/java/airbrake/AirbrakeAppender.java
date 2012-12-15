@@ -17,10 +17,22 @@ public class AirbrakeAppender extends AppenderSkeleton {
 
 	private boolean enabled;
 
-	private Backtrace backtrace = new QuietRubyBacktrace();
+	private Backtrace backtrace = new Backtrace();
 
 	public AirbrakeAppender() {
 		setThreshold(Level.ERROR);
+	}
+
+	public Backtrace getBacktrace() {
+		return backtrace;
+	}
+
+	public String getApiKey() {
+		return apiKey;
+	}
+
+	public String getEnv() {
+		return env;
 	}
 
 	public AirbrakeAppender(final String apiKey) {
@@ -49,7 +61,8 @@ public class AirbrakeAppender extends AppenderSkeleton {
 	}
 
 	public AirbrakeNotice newNoticeFor(final Throwable throwable) {
-		return new AirbrakeNoticeBuilderUsingFilteredSystemProperties(apiKey, backtrace, throwable, env).newNotice();
+		return new AirbrakeNoticeBuilderUsingFilteredSystemProperties(apiKey,
+				backtrace, throwable, env).newNotice();
 	}
 
 	private int notifyThrowableIn(final LoggingEvent loggingEvent) {

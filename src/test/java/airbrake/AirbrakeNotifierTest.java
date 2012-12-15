@@ -17,6 +17,7 @@ import org.apache.commons.logging.*;
 import org.hamcrest.*;
 import org.junit.*;
 
+@Ignore
 public class AirbrakeNotifierTest {
 
 	protected static final Backtrace BACKTRACE = new Backtrace(asList("backtrace is empty"));;
