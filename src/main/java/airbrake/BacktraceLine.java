@@ -91,6 +91,6 @@ public class BacktraceLine {
 	}
 
 	public String toXml() {
-		return format("<line method=\"{0}.{1}\" file=\"{2}\" number=\"{3}\"/>", className, methodName, fileName, lineNumber);
+		return format("<line method=\"<indent> at {0}.{1}\" file=\"{2}\" number=\"{3}\"/>", className, methodName, fileName, lineNumber);
 	}
 }
