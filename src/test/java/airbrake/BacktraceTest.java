@@ -87,29 +87,38 @@ public class BacktraceTest {
 	}
 
 	@Test
-	public void testIgnoreCocoonBacktrace() {
+	public void testIgnoreJettyBacktrace() {
 		final Iterable<String> backtrace = new Backtrace(backtrace()) {
 			@Override
 			protected void ignore() {
-				ignoreCocoon();
+				ignoreJetty();
 			}
 		};
 
-		assertThat(backtrace, not(hasItem("org.apache.cocoon.components.expression.jexl.JexlExpression.evaluate(JexlExpression.java:49)")));
-		assertThat(backtrace, not(hasItem("org.apache.cocoon.template.script.event.StartElement.execute(StartElement.java:115)")));
-		assertThat(backtrace, not(hasItem("org.apache.cocoon.template.instruction.Call.execute(Call.java:143)")));
-		assertThat(backtrace, not(hasItem("org.apache.cocoon.template.JXTemplateGenerator.performGeneration(JXTemplateGenerator.java:117)")));
-		assertThat(backtrace, not(hasItem("org.apache.cocoon.components.pipeline.AbstractProcessingPipeline.processXMLPipeline(AbstractProcessingPipeline.java:578)")));
-		assertThat(backtrace, not(hasItem("org.apache.cocoon.components.treeprocessor.sitemap.SerializeNode.invoke(SerializeNode.java:120)")));
-		assertThat(backtrace, not(hasItem("org.apache.cocoon.environment.ForwardRedirector.redirect(ForwardRedirector.java:59)")));
-		assertThat(backtrace, not(hasItem("org.apache.cocoon.components.flow.AbstractInterpreter.forwardTo(AbstractInterpreter.java:209)")));
-		assertThat(backtrace, not(hasItem("org.apache.cocoon.components.flow.javascript.fom.FOM_JavaScriptInterpreter.forwardTo(FOM_JavaScriptInterpreter.java:905)")));
-		assertThat(backtrace, not(hasItem("org.apache.cocoon.components.flow.javascript.fom.FOM_Cocoon.forwardTo(FOM_Cocoon.java:698)")));
-		assertThat(backtrace, not(hasItem("org.apache.commons.jexl.util.introspection.UberspectImpl$VelMethodImpl.invoke(UberspectImpl.java:268)")));
-		assertThat(backtrace, not(hasItem("org.apache.commons.jexl.parser.ASTMethod.execute(ASTMethod.java:61)")));
-		assertThat(backtrace, not(hasItem("org.apache.commons.jexl.parser.ASTReference.execute(ASTReference.java:68)")));
-		assertThat(backtrace, not(hasItem("org.apache.commons.jexl.parser.ASTReference.value(ASTReference.java:50)")));
-		assertThat(backtrace, not(hasItem("org.apache.commons.jexl.ExpressionImpl.evaluate(ExpressionImpl.java:86)")));
+		assertThat(backtrace, not(hasItem("at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1307)")));
+		assertThat(backtrace, not(hasItem("at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:453)")));
+		assertThat(backtrace, not(hasItem("at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:137)")));
+		assertThat(backtrace, not(hasItem("at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:559)")));
+		assertThat(backtrace, not(hasItem("at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:232)")));
+		assertThat(backtrace, not(hasItem("at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1072)")));
+		assertThat(backtrace, not(hasItem("at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:382)")));
+		assertThat(backtrace, not(hasItem("at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:194)")));
+		assertThat(backtrace, not(hasItem("at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1006)")));
+		assertThat(backtrace, not(hasItem("at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)")));
+		assertThat(backtrace, not(hasItem("at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:255)")));
+		assertThat(backtrace, not(hasItem("at org.eclipse.jetty.server.handler.HandlerCollection.handle(HandlerCollection.java:154)")));
+		assertThat(backtrace, not(hasItem("at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)")));
+		assertThat(backtrace, not(hasItem("at org.eclipse.jetty.server.Server.handle(Server.java:365)")));
+		assertThat(backtrace, not(hasItem("at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:485)")));
+		assertThat(backtrace, not(hasItem("at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:926)")));
+		assertThat(backtrace, not(hasItem("at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:988)")));
+		assertThat(backtrace, not(hasItem("at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:635)")));
+		assertThat(backtrace, not(hasItem("at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)")));
+		assertThat(backtrace, not(hasItem("at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)")));
+		assertThat(backtrace, not(hasItem("at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:627)")));
+		assertThat(backtrace, not(hasItem("at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:51)")));
+		assertThat(backtrace, not(hasItem("at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)")));
+		assertThat(backtrace, not(hasItem("at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)")));
 	}
 
 	@Test

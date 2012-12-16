@@ -9,7 +9,7 @@
   <groupId>io.airbrake</groupId>
   <artifactId>airbrake-java</artifactId>
   <packaging>jar</packaging>
-  <version>2.2.4-SNAPSHOT</version>
+  <version>2.2.3</version>
   <name>Airbrake Notifier Java</name>
   <description>This is the official library to notify exception to Airbrake.io</description>
   <url>https://airbrake.io</url>

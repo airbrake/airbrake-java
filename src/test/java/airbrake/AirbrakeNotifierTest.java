@@ -65,7 +65,7 @@ public class AirbrakeNotifierTest {
 		assertThat(notifing(ERROR_MESSAGE), not(internalServerError()));
 		assertThat(notifing("java.lang.RuntimeException: an expression is not valid"), not(internalServerError()));
 		assertThat(notifing("Caused by: java.lang.NullPointerException"), not(internalServerError()));
-		assertThat(notifing("at code.lucamarrocco.notifier.Exceptions.newException(Exceptions.java:11)"), not(internalServerError()));
+		assertThat(notifing("at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1307)"), not(internalServerError()));
 		assertThat(notifing("... 23 more"), not(internalServerError()));
 	}
 

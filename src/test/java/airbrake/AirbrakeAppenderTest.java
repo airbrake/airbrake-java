@@ -33,7 +33,7 @@ public class AirbrakeAppenderTest {
 
 	@Test
 	public void testNotyfyThrowable() {
-		final AirbrakeAppender appender = new AirbrakeAppender(API_KEY);
+		final AirbrakeAppender appender = new AirbrakeAppender(API_KEY, new RubyBacktrace());
 
 		final AirbrakeNotice notice = appender.newNoticeFor(newException(ERROR_MESSAGE));
 

@@ -31,18 +31,18 @@ public class BacktraceLine {
 	}
 
 	private String fileName(String line) {
-		if (line.matches(".*`.*'")) {
-			String result = line.replaceAll(".*at ", "").replaceAll(":.*", "").replaceAll(".java", "");
-			return result.substring(result.lastIndexOf('.') + 1).concat(".java");
-		}
-		else
+//		if (line.matches(".*`.*'")) {
+//			String result = line.replaceAll(".*at ", "").replaceAll(":.*", "").replaceAll(".java", "");
+//			return result.substring(result.lastIndexOf('.') + 1).concat(".java");
+//		}
+//		else
 			return line.replaceAll("^.*\\(", "").replaceAll(":.*", "");
 	}
 
 	private String methodName(String classAndMethodName) {
-		if (classAndMethodName.matches(".*`.*'"))
-			return classAndMethodName.substring(classAndMethodName.lastIndexOf("`") + 1, classAndMethodName.lastIndexOf("'"));
-		else
+//		if (classAndMethodName.matches(".*`.*'"))
+//			return classAndMethodName.substring(classAndMethodName.lastIndexOf("`") + 1, classAndMethodName.lastIndexOf("'"));
+//		else
 			return classAndMethodName.substring(classAndMethodName.lastIndexOf(".") + 1);
 	}
 
@@ -67,9 +67,9 @@ public class BacktraceLine {
 
 	private int lineNumber(String line) {
 		try {
-			if (line.matches(".*`.*'"))
-				return Integer.parseInt(line.substring(line.indexOf(":") + 1, line.lastIndexOf(":")));
-			else
+//			if (line.matches(".*`.*'"))
+//				return Integer.parseInt(line.substring(line.indexOf(":") + 1, line.lastIndexOf(":")));
+//			else
 				
 			return Integer.parseInt(line.replaceAll("^.*:", "").replaceAll("\\)", "").replaceAll(":.*", ""));
 		} catch (NumberFormatException e) {

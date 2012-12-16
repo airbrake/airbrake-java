@@ -66,6 +66,10 @@ public class Backtrace implements Iterable<String> {
 		ignoreRules.add(ignoreRule);
 	}
 
+	protected void ignoreJetty() {
+		ignore(".*org.eclipse.jetty.*");
+	}
+
 	protected void ignoreCocoon() {
 		ignore(".*org.apache.cocoon.components.expression.*");
 		ignore(".*org.apache.cocoon.template.script.*");
@@ -184,11 +188,14 @@ public class Backtrace implements Iterable<String> {
 	}
 
 	private String toBacktrace(final StackTraceElement element) {
-		return toBacktrace(element.getClassName(), element.getFileName(), element.getLineNumber(), element.getMethodName());
+		return toBacktrace(element.getClassName(), element.getFileName(),
+				element.getLineNumber(), element.getMethodName());
 	}
 
-	protected String toBacktrace(final String className, final String fileName, final int lineNumber, final String methodName) {
-		return new BacktraceLine(className, fileName, lineNumber, methodName).toString();
+	protected String toBacktrace(final String className, final String fileName,
+			final int lineNumber, final String methodName) {
+		return new BacktraceLine(className, fileName, lineNumber, methodName)
+				.toString();
 	}
 
 	private void toBacktrace(final Throwable throwable) {
