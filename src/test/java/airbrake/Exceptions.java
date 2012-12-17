@@ -5,6 +5,7 @@
 package airbrake;
 
 public class Exceptions {
+	
 	protected static final String ERROR_MESSAGE = "undefined method `password' for nil:NilClass";
 
 	public static final Exception newException(final String errorMessage) {

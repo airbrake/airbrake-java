@@ -51,12 +51,12 @@ public class AirbrakeNotifier {
 			String noticeXml = new NoticeXml(notice).toString();
 			return send(noticeXml, airbrakeConnection);
 		} catch (final Exception e) {
-			preintStackTrace(notice, e);
+			printStacktrace(notice, e);
 		}
 		return 0;
 	}
 
-	private void preintStackTrace(final AirbrakeNotice notice, final Exception e) {
+	private void printStacktrace(final AirbrakeNotice notice, final Exception e) {
 		e.printStackTrace();
 	}
 

@@ -11,8 +11,6 @@ import org.junit.*;
 
 public class NoticeApiXmlTest {
 
-	NoticeApiXmlBuilderTest t;
-
 	private AirbrakeNotice notice;
 
 	private String clean(String string) {

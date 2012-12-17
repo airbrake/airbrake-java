@@ -12,6 +12,7 @@ public class NoticeXml {
 	private final StringBuilder stringBuilder = new StringBuilder();
 
 	public NoticeXml(AirbrakeNotice notice) {
+		
 		notice("2.2");
 		{
 			apikey(notice);
