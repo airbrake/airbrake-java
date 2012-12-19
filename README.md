@@ -12,78 +12,98 @@ use log4j you can use airbrake notifier directly with a very simple API.
 Setting up with Maven
 ---------------------
 
-	<project>
-  		<dependencies>
-    		<dependency>
-      		<groupId>io.airbrake</groupId>
-      		<artifactId>airbrake-java</artifactId>
-      		<version>2.2.3/version>
-    		</dependency>
-  		</dependencies>
-	</project>
+	<dependency>
+		<groupId>io.airbrake</groupId>
+		<artifactId>airbrake-java</artifactId>
+		<version>2.3.0/version>
+	</dependency>
+
 
 Without Maven
 -------------
 
 you need to add these libraries to your classpath
- * [airbrake-java-2.2.3](https://github.com/airbrake/airbrake-java/blob/master/maven2/io/airbrake/airbrake-java/2.2.3/airbrake-java-2.2.3.jar?raw=true)
+ * [airbrake-java-2.3.0](https://github.com/airbrake/airbrake-java/blob/master/maven2/io/airbrake/airbrake-java/2.3.0/airbrake-java-2.3.0.jar?raw=true)
  * [log4j-1.2.14](https://github.com/airbrake/airbrake-java/blob/master/maven2/log4j/1.2.14/log4j-1.2.14.jar?raw=true)
 
-Log4j
------
 
-	log4j.rootLogger=INFO, stdout, airbrake
+Howto use it
+------------------------------
 
-	log4j.appender.stdout=org.apache.log4j.ConsoleAppender
-	log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
-	log4j.appender.stdout.layout.ConversionPattern=[%d,%p] [%c{1}.%M:%L] %m%n
+	Airbrake airbrake = new Airbrake(YOUR_AIRBRAKE_PROJECT_ID, YOUR_AIRBRAKE_PROJECT_ID);
 
-	log4j.appender.airbrake=airbrake.AirbrakeAppender	
-	log4j.appender.airbrake.api_key=YOUR_AIRBRAKE_API_KEY
-	#log4j.appender.airbrake.env=development
-	#log4j.appender.airbrake.env=production
-	log4j.appender.airbrake.env=test
+	try {
+		throw new RuntimeException("example1");
+	} catch (Exception e) {
+		airbrake.notify(e);
+	}
+
+
+
+Howto use it with Log4J
+-----------------------
+
+	log4j.rootLogger=ERROR, airbrake
+
+	log4j.appender.airbrake=io.airbrake.AirbrakeAppender
 	log4j.appender.airbrake.enabled=true
-  #log4j.appender.airbrake.noticesUrl=http://api.airbrake.io/notifier_api/v2/notices
+	log4j.appender.airbrake.url=http://collect.airbrake.io
+	log4j.appender.airbrake.apiKey=YOUR_AIRBRAKE_API_KEY
+	log4j.appender.airbrake.projectId=YOUR_AIRBRAKE_PROJECT_ID
+	log4j.appender.airbrake.envName=test
+	log4j.appender.airbrake.appVersion=1.0
 
 or in XML format:
 
 	<appender name="AIRBRAKE" class="airbrake.AirbrakeAppender">
-		<param name="api_key" value="YOUR_AIRBRAKE_API_KEY"/>
-		<param name="env" value="test"/>
 		<param name="enabled" value="true"/>
-    <!-- <param name="noticesUrl" value="http://api.airbrake.io/notifier_api/v2/notices" /> -->
+		<param name="url" value="http://collect.airbrake.io"/>
+		<param name="apiKey" value="YOUR_AIRBRAKE_API_KEY"/>
+		<param name="projectId" value="YOUR_AIRBRAKE_PROJECT_ID"/>
+		<param name="envName" value="test"/>
+		<param name="appVersion" value="1.0"/>
 	</appender>
 
 	<root>
 		<appender-ref ref="AIRBRAKE"/>
 	</root>
 
-Directly
-------------------------------
 
-	try {
-  		doSomethingThatThrowAnException();
-	}
-	catch(Throwable t) {
-  		AirbrakeNotice notice = new AirbrakeNoticeBuilder(YOUR_AIRBRAKE_API_KEY, t, "env").newNotice();
-  		AirbrakeNotifier notifier = new AirbrakeNotifier();
-  		notifier.notify(notice);
-	}
+Howto use it with Filter
+------------------------
 
-if you need to specifiy a different url to send notice you can create new notifier with this url:
+	public class AirbrakeFilter implements Filter {
 
-	try {
-  		doSomethingThatThrowAnException();
-	}
-	catch(Throwable t) {
-  		AirbrakeNotice notice = new AirbrakeNoticeBuilder(YOUR_AIRBRAKE_API_KEY, t, "env").newNotice();
-  		AirbrakeNotifier notifier = new AirbrakeNotifier("http://api.airbrake.io/notifier_api/v2/notices");
-  		notifier.notify(notice);
-	}
+		private Airbrake airbrake;
 
+		@Override
+		public void init(FilterConfig filterConfig) throws ServletException {
+			airbrake = new Airbrake(YOUR_AIRBRAKE_PROJECT_ID, YOUR_AIRBRAKE_PROJECT_ID);
+			airbrake.setEnvName("test");
+			airbrake.setAppVersion("1.0");
+		}
 
+		@Override
+		public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+			try {
+				chain.doFilter(request, response);
+			} catch (Exception e) {
+				airbrake.notify(e, request, System.getProperties());
+			}
+		}
 	
+		@Override
+		public void destroy() {}
+
+	}
+
+
+Setup different endpoint
+------------------------
+
+	new Airbrake(YOUR_AIRBRAKE_PROJECT_ID, YOUR_AIRBRAKE_PROJECT_ID, "http://collect.airbrake.io");
+
+
 
 Support
 -------
