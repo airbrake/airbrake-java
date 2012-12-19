@@ -12,6 +12,13 @@ import java.util.regex.*;
 
 public class Backtrace implements Iterable<String> {
 
+	public static boolean isValidBacktrace(String string) {
+		return string.matches("[^:]*:\\d+.*");
+	}
+
+	public static boolean notValidBacktrace(String string) {
+		return !isValidBacktrace(string);
+	}
 	private final List<String> backtrace = new LinkedList<String>();
 
 	private final List<String> ignoreRules = new LinkedList<String>();

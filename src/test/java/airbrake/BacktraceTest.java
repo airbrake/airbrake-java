@@ -37,7 +37,7 @@ public class BacktraceTest {
 
 	@Test
 	public void testExceptionToRubyBacktrace() {
-		final Throwable EXCEPTION = newException(ERROR_MESSAGE);
+		final Throwable EXCEPTION = newException("java.lang.RuntimeException: undefined method `password' for nil:NilClass");
 
 		final Iterable<String> backtrace = new RubyBacktrace(EXCEPTION);
 
@@ -46,7 +46,7 @@ public class BacktraceTest {
 
 	@Test
 	public void testExceptionToRubyBacktrace$UsingNewRubyBacktraceEmptyInstanceAsFactoryOfRubyBacktrace() {
-		final Throwable EXCEPTION = newException(ERROR_MESSAGE);
+		final Throwable EXCEPTION = newException("java.lang.RuntimeException: undefined method `password' for nil:NilClass");
 
 		final Iterable<String> backtrace = new RubyBacktrace().newBacktrace(EXCEPTION);
 
@@ -55,7 +55,7 @@ public class BacktraceTest {
 
 	@Test
 	public void testFilteredIgnoringMessage() {
-		final Throwable EXCEPTION = newException(ERROR_MESSAGE);
+		final Throwable EXCEPTION = newException("java.lang.RuntimeException: undefined method `password' for nil:NilClass");
 
 		final Iterable<String> backtrace = new QuietRubyBacktrace(EXCEPTION);
 
