@@ -42,6 +42,8 @@ public class Airbrake {
 
 		String json = AirbrakeNotice.json(throwable, request, envName, properties, appVersion);
 		
+		System.out.println(json);
+		
 		URL url = null;
 		try {
 			url = new URL(noticesUrl + "?key=" + apiKey);
