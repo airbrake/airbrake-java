@@ -44,7 +44,7 @@ Log4j
 	#log4j.appender.airbrake.env=production
 	log4j.appender.airbrake.env=test
 	log4j.appender.airbrake.enabled=true
-  #log4j.appender.airbrake.noticesUrl=http://api.airbrake.io/notifier_api/v2/notices
+	#log4j.appender.airbrake.url=http://api.airbrake.io/notifier_api/v2/notices
 
 or in XML format:
 
@@ -52,7 +52,7 @@ or in XML format:
 		<param name="api_key" value="YOUR_AIRBRAKE_API_KEY"/>
 		<param name="env" value="test"/>
 		<param name="enabled" value="true"/>
-    <!-- <param name="noticesUrl" value="http://api.airbrake.io/notifier_api/v2/notices" /> -->
+    <!-- <param name="url" value="http://api.airbrake.io/notifier_api/v2/notices" /> -->
 	</appender>
 
 	<root>
