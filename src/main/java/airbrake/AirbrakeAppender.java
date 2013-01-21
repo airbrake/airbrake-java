@@ -83,14 +83,11 @@ public class AirbrakeAppender extends AppenderSkeleton {
 	}
 
 	private boolean thereIsThrowableIn(final LoggingEvent loggingEvent) {
-		return loggingEvent.getMessage() != null;
+		return loggingEvent.getThrowableInformation() != null;
 	}
 
 	private Throwable throwable(final LoggingEvent loggingEvent) {
-		Object message = loggingEvent.getMessage();
-		if (message instanceof Throwable)
-			return (Throwable) loggingEvent.getMessage();
-		return null;
+		return loggingEvent.getThrowableInformation().getThrowable();
 	}
 
 	protected String getApiKey() {
