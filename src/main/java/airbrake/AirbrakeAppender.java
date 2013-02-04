@@ -94,21 +94,21 @@ public class AirbrakeAppender extends AppenderSkeleton {
 
 	/**
 	 * Get the throwable information contained in a {@link LoggingEvent}.
-	 * Returns the message if it's a Throwable, otherwise it will return the
-	 * Throwable passed to the logger in the second argument.
-	 * 
+	 * Returns the Throwable passed to the logger or the message if it's a
+	 * Throwable.
 	 * @param loggingEvent
-	 * @return The Throwable contained in the {@link LoggingEvent}
-	 * @throws NullPointerException
-	 *             If the message is not a Throwable and there was no Throwable
-	 *             passed in the second argument
+	 * @return The Throwable contained in the {@link LoggingEvent} or null if there is none.
 	 */
 	private Throwable throwable(final LoggingEvent loggingEvent) {
+		ThrowableInformation throwableInfo = loggingEvent.getThrowableInformation();
+		if (throwableInfo != null)
+			return throwableInfo.getThrowable();
+		
 		Object message = loggingEvent.getMessage();
 		if (message instanceof Throwable)
 			return (Throwable) message;
 		
-		return loggingEvent.getThrowableInformation().getThrowable();
+		return null;
 	}
 
 	protected String getApiKey() {
