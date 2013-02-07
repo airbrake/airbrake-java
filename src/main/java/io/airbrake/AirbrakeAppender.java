@@ -15,8 +15,7 @@ public class AirbrakeAppender extends AppenderSkeleton {
 
 	@Override
 	protected void append(final LoggingEvent loggingEvent) {
-		if (!enabled)
-			return;
+		if (!enabled) return;
 
 		if (thereIsThrowableIn(loggingEvent)) {
 			notifyThrowableIn(loggingEvent);
@@ -47,6 +46,7 @@ public class AirbrakeAppender extends AppenderSkeleton {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
+
 	public void setEnvName(String envName) {
 		airbrake.setEnvName(envName);
 	}
@@ -58,15 +58,20 @@ public class AirbrakeAppender extends AppenderSkeleton {
 	public void setUrl(String url) {
 		airbrake.setUrl(url);
 	}
-	
+
 	private boolean thereIsThrowableIn(final LoggingEvent loggingEvent) {
-		return loggingEvent.getMessage() != null;
+		boolean loggingEventContainsThrowableInformation = loggingEvent.getThrowableInformation() != null;
+		boolean logginEventIsThrowable = loggingEvent.getMessage() instanceof Throwable;
+		return loggingEventContainsThrowableInformation || logginEventIsThrowable;
 	}
 
 	private Throwable throwable(final LoggingEvent loggingEvent) {
+		ThrowableInformation throwableInfo = loggingEvent.getThrowableInformation();
+		if (throwableInfo != null) return throwableInfo.getThrowable();
+
 		Object message = loggingEvent.getMessage();
-		if (message instanceof Throwable)
-			return (Throwable) loggingEvent.getMessage();
+		if (message instanceof Throwable) return (Throwable) message;
+
 		return null;
 	}
 
