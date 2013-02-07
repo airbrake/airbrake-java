@@ -17,12 +17,6 @@ public class AirbrakeNoticeTest {
 		assertTrue(json.contains("notifier\":{\"name\":\"airbrake-java\",\"version\":\"2.3\",\"url\":\"https://github.com/airbrake/airbrake-java"));
 	}
 
-//	@Test
-//	public void shouldContainsError() {
-//		String json = AirbrakeNotice.json(new RuntimeException("error"), null, "test", null, "1.0");
-//		assertTrue(json.contains("errors\":[{\"type\":\"java.lang.RuntimeException\",\"message\":\"error"));
-//	}
-
 	@Test
 	public void shouldContainsBacktrace() {
 		String json = AirbrakeNotice.json(new RuntimeException("error"), null, "test", null, "1.0");
@@ -43,7 +37,7 @@ public class AirbrakeNoticeTest {
 		parameterMap.put("b", new String[] {"a", "b"});
 		String json = AirbrakeNotice.json(new RuntimeException("error"), request("/sample", "/", parameterMap), "test", null, "1.0");
 		System.out.println(json);
-		assertTrue(json.contains("data\":{"));
+		assertTrue(json.contains("params\":{"));
 		assertTrue(json.contains("\"a\":\"a\""));
 		assertTrue(json.contains("\"b\":\"a\""));
 	}
