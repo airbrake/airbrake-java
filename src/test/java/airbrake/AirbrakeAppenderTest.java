@@ -37,9 +37,8 @@ public class AirbrakeAppenderTest {
 
 		final AirbrakeNotice notice = appender.newNoticeFor(newException(ERROR_MESSAGE));
 
-		assertThat(notice.backtrace(), hasItem("at airbrake.Exceptions.java:15:in `newException'"));
+		assertThat(notice.backtrace(), hasItem("at airbrake.Exceptions.java:16:in `newException'"));
 		assertThat(notice.backtrace(), hasItem("Caused by java.lang.NullPointerException"));
-		assertThat(notice.backtrace(), hasItem("at airbrake.Exceptions.java:13:in `newException'"));
 	}
 
 	@Test
@@ -48,9 +47,8 @@ public class AirbrakeAppenderTest {
 
 		final AirbrakeNotice notice = appender.newNoticeFor(newException(ERROR_MESSAGE));
 
-		assertThat(notice.backtrace(), hasItem("at airbrake.Exceptions.newException(Exceptions.java:15)"));
+		assertThat(notice.backtrace(), hasItem("at airbrake.Exceptions.newException(Exceptions.java:16)"));
 		assertThat(notice.backtrace(), hasItem("Caused by java.lang.NullPointerException"));
-		assertThat(notice.backtrace(), hasItem("at airbrake.Exceptions.newException(Exceptions.java:13)"));
 
 		assertThat(notice.backtrace(), hasItem("at sun.reflect.NativeMethodAccessorImpl.invoke0(NativeMethodAccessorImpl.java-2)"));
 	}
@@ -61,9 +59,8 @@ public class AirbrakeAppenderTest {
 
 		final AirbrakeNotice notice = appender.newNoticeFor(newException(ERROR_MESSAGE));
 
-		assertThat(notice.backtrace(), hasItem("at airbrake.Exceptions.java:15:in `newException'"));
+		assertThat(notice.backtrace(), hasItem("at airbrake.Exceptions.java:16:in `newException'"));
 		assertThat(notice.backtrace(), hasItem("Caused by java.lang.NullPointerException"));
-		assertThat(notice.backtrace(), hasItem("at airbrake.Exceptions.java:13:in `newException'"));
 	}
 
 	@Test
@@ -72,9 +69,8 @@ public class AirbrakeAppenderTest {
 
 		final AirbrakeNotice notice = appender.newNoticeFor(newException(ERROR_MESSAGE));
 
-		assertThat(notice.backtrace(), hasItem("at airbrake.Exceptions.java:15:in `newException'"));
+		assertThat(notice.backtrace(), hasItem("at airbrake.Exceptions.java:16:in `newException'"));
 		assertThat(notice.backtrace(), hasItem("Caused by java.lang.NullPointerException"));
-		assertThat(notice.backtrace(), hasItem("at airbrake.Exceptions.java:13:in `newException'"));
 	}
 
 	@Test
