@@ -82,14 +82,32 @@ public class AirbrakeAppender extends AppenderSkeleton {
 		airbrakeNotifier.setUrl(url);
 	}
 
+	/**
+	 * Checks if the LoggingEvent contains a Throwable
+	 * @param loggingEvent
+	 * @return
+	 */
 	private boolean thereIsThrowableIn(final LoggingEvent loggingEvent) {
-		return loggingEvent.getMessage() != null;
+		return  loggingEvent.getThrowableInformation() != null ||
+				loggingEvent.getMessage() instanceof Throwable;
 	}
 
+	/**
+	 * Get the throwable information contained in a {@link LoggingEvent}.
+	 * Returns the Throwable passed to the logger or the message if it's a
+	 * Throwable.
+	 * @param loggingEvent
+	 * @return The Throwable contained in the {@link LoggingEvent} or null if there is none.
+	 */
 	private Throwable throwable(final LoggingEvent loggingEvent) {
+		ThrowableInformation throwableInfo = loggingEvent.getThrowableInformation();
+		if (throwableInfo != null)
+			return throwableInfo.getThrowable();
+		
 		Object message = loggingEvent.getMessage();
 		if (message instanceof Throwable)
-			return (Throwable) loggingEvent.getMessage();
+			return (Throwable) message;
+		
 		return null;
 	}
 
