@@ -78,17 +78,37 @@ Howto use it with Filter
 
 		@Override
 		public void init(FilterConfig filterConfig) throws ServletException {
-			airbrake = new Airbrake(YOUR_AIRBRAKE_PROJECT_ID, YOUR_AIRBRAKE_PROJECT_ID);
-			airbrake.setEnvName("test");
-			airbrake.setAppVersion("1.0");
+
+			airbrake = new Airbrake(YOUR_AIRBRAKE_PROJECT_ID, YOUR_AIRBRAKE_PROJECT_ID) {{
+
+				version("1.0");
+
+				// to collect inforation about your environment
+				environment("test");
+
+				// to ignore sensitive environment informations
+				environmentFilter("AWS_SECRET");
+				environmentFilter("EC2_PRIVATE_KEY");
+
+
+				// to remove stacktrace line that are not useful
+				stacktraceFilter("java.awt.*");
+				stacktraceFilter("java.vendor.*");
+				stacktraceFilter("java.class.path");
+				stacktraceFilter("java.vm.specification.*");
+
+				// to replace sensitive information sent to the Airbrake service with [FILTERED]
+				paramFilter("creditCardNumber");
+			}};
 		}
 
 		@Override
 		public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+
 			try {
 				chain.doFilter(request, response);
 			} catch (Exception e) {
-				airbrake.notify(e, request, System.getProperties());
+				airbrake.notify(e, new HashMap(), request, System.getProperties());
 			}
 		}
 	
@@ -102,6 +122,7 @@ Setup different endpoint
 ------------------------
 
 	new Airbrake(YOUR_AIRBRAKE_PROJECT_ID, YOUR_AIRBRAKE_PROJECT_ID, "http://collect.airbrake.io");
+
 
 
 

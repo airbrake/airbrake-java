@@ -14,7 +14,14 @@ public class Airbrake {
 	private String envName;
 	private String noticesUrl;
 	private String projectId;
+
 	private String url = "http://collect.airbrake.io";
+
+	private final List<String> environmentFilters = new ArrayList<String>();
+	private final List<String> stacktraceFilters = new ArrayList<String>();
+	private final List<String> paramFilters = new ArrayList<String>();
+
+	private AirbrakeNotice notice = new AirbrakeNotice(environmentFilters, stacktraceFilters, paramFilters);
 
 	protected Airbrake() {
 	}
@@ -30,20 +37,37 @@ public class Airbrake {
 		setNoticesUrl(projectId);
 	}
 
+	public void environment(String envName) {
+		setEnvName(envName);
+	}
+
+	public void environmentFilter(String filter) {
+		environmentFilters.add(filter);
+		updateNotice();
+	}
+
+	private void updateNotice() {
+		notice = new AirbrakeNotice(environmentFilters, stacktraceFilters, paramFilters);
+	}
+
 	public void notify(Throwable throwable) {
-		notify(throwable, null, null);
+		notify(throwable, null, null, null);
 	}
 
 	public void notify(Throwable throwable, HttpServletRequest request) {
-		notify(throwable, request, null);
+		notify(throwable, null, request, null);
 	}
 
-	public void notify(Throwable throwable, ServletRequest request, Properties properties) {
+	public void notify(Throwable throwable, Properties properties) {
+		notify(throwable, null, null, properties);
+	}
 
-		String json = AirbrakeNotice.json(throwable, request, envName, properties, appVersion);
-		
+	public void notify(Throwable throwable, Map session, ServletRequest request, Properties properties) {
+
+		String json = notice.json(throwable, session, request, envName, properties, appVersion);
+
 		System.out.println(json);
-		
+
 		URL url = null;
 		try {
 			url = new URL(noticesUrl + "?key=" + apiKey);
@@ -78,6 +102,11 @@ public class Airbrake {
 
 	}
 
+	public void paramFilter(String filter) {
+		paramFilters.add(filter);
+		updateNotice();
+	}
+
 	protected void setApiKey(String apiKey) {
 		this.apiKey = apiKey;
 	}
@@ -102,6 +131,15 @@ public class Airbrake {
 	protected void setUrl(String url) {
 		this.url = url;
 		setNoticesUrl(projectId);
+	}
+
+	public void stacktraceFilter(String filter) {
+		stacktraceFilters.add(filter);
+		updateNotice();
+	}
+
+	public void version(String appVersion) {
+		setAppVersion(appVersion);
 	}
 
 }
