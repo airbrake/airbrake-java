@@ -9,11 +9,9 @@ import javax.servlet.http.*;
 public class AirbrakeNotice {
 
 	private final List<String> stacktraceFilters;
-	private final List<String> environmentFilters;
 	private final List<String> paramFilters;
 
-	public AirbrakeNotice(List<String> environmentFilters, List<String> stacktraceFilters, List<String> paramFilters) {
-		this.environmentFilters = environmentFilters;
+	public AirbrakeNotice(List<String> stacktraceFilters, List<String> paramFilters) {
 		this.stacktraceFilters = stacktraceFilters;
 		this.paramFilters = paramFilters;
 	}
@@ -60,26 +58,20 @@ public class AirbrakeNotice {
 		return json.toString();
 	}
 
-	private void jsonEnvironment(StringBuilder json, Map environment) {
-
+	private void jsonEnvironment(StringBuilder json, Map vars) {
 		json.append("\"environment\":{");
-
-		if (environment != null) {
-			Iterator<String> keys = environment.keySet().iterator();
-			while (keys.hasNext()) {
-				String key = keys.next();
-				Object value = environment.get(key);
-				json.append("\"" + key + "\":" + jsonize(value));
-				if (keys.hasNext()) json.append(",");
-			}
-		}
-
+		jsonVars(json, vars);
 		json.append("}");
 	}
 
 	private void jsonSession(StringBuilder json, Map vars) {
-
 		json.append("\"session\":{");
+		jsonVars(json, vars);
+		json.append("}");
+	}
+	
+	private void jsonParams(StringBuilder json, Map vars) {
+		json.append("\"params\":{");
 		jsonVars(json, vars);
 		json.append("}");
 	}
@@ -96,12 +88,6 @@ public class AirbrakeNotice {
 				if (keys.hasNext()) json.append(",");
 			}
 		}
-	}
-
-	private void jsonParams(StringBuilder json, Map vars) {
-		json.append("\"params\":{");
-		jsonVars(json, vars);
-		json.append("}");
 	}
 
 	private Map getParamters(ServletRequest request) {

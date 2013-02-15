@@ -13,13 +13,12 @@ public class AirbrakeJsonTest {
 
 	private AirbrakeNotice notice;
 
-	private static final List<String> environmentFilters = Arrays.asList("");
 	private static final List<String> stacktraceFilters = Arrays.asList("sun.reflect", "java.lang.reflect", "org.junit");
-	private static final List<String> paramFilters = Arrays.asList("creditCardNumber");
+	private static final List<String> paramFilters = Arrays.asList("creditCardNumber", "user.dir");
 
 	@Before
 	public void setUp() {
-		notice = new AirbrakeNotice(environmentFilters, stacktraceFilters, paramFilters);
+		notice = new AirbrakeNotice(stacktraceFilters, paramFilters);
 	}
 
 	@Test

@@ -17,11 +17,10 @@ public class Airbrake {
 
 	private String url = "http://collect.airbrake.io";
 
-	private final List<String> environmentFilters = new ArrayList<String>();
 	private final List<String> stacktraceFilters = new ArrayList<String>();
 	private final List<String> paramFilters = new ArrayList<String>();
 
-	private AirbrakeNotice notice = new AirbrakeNotice(environmentFilters, stacktraceFilters, paramFilters);
+	private AirbrakeNotice notice = new AirbrakeNotice(stacktraceFilters, paramFilters);
 
 	protected Airbrake() {
 	}
@@ -41,13 +40,8 @@ public class Airbrake {
 		setEnvName(envName);
 	}
 
-	public void environmentFilter(String filter) {
-		environmentFilters.add(filter);
-		updateNotice();
-	}
-
 	private void updateNotice() {
-		notice = new AirbrakeNotice(environmentFilters, stacktraceFilters, paramFilters);
+		notice = new AirbrakeNotice(stacktraceFilters, paramFilters);
 	}
 
 	public void notify(Throwable throwable) {
@@ -102,7 +96,7 @@ public class Airbrake {
 
 	}
 
-	public void paramFilter(String filter) {
+	public void sensitiveFilter(String filter) {
 		paramFilters.add(filter);
 		updateNotice();
 	}

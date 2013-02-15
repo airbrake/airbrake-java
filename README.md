@@ -86,19 +86,18 @@ Howto use it with Filter
 				// to collect inforation about your environment
 				environment("test");
 
-				// to ignore sensitive environment informations
-				environmentFilter("AWS_SECRET");
-				environmentFilter("EC2_PRIVATE_KEY");
+				// to replace sensitive information sent to the Airbrake service with [FILTERED]
+				sensitiveFilter("creditCardNumber");
 
+				// to replace sensitive environment informations with [FILTERED]
+				sensitiveFilter("AWS_SECRET");
+				sensitiveFilter("EC2_PRIVATE_KEY");
 
 				// to remove stacktrace line that are not useful
-				stacktraceFilter("java.awt.*");
-				stacktraceFilter("java.vendor.*");
-				stacktraceFilter("java.class.path");
-				stacktraceFilter("java.vm.specification.*");
-
-				// to replace sensitive information sent to the Airbrake service with [FILTERED]
-				paramFilter("creditCardNumber");
+				noiseFilter("java.awt");
+				noiseFilter("java.vendor");
+				noiseFilter("java.class.path");
+				noiseFilter("java.vm.specification");
 			}};
 		}
 
