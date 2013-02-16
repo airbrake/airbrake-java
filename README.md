@@ -85,8 +85,17 @@ or in XML format:
 	</root>
 
 
-Howto use it with Filter
-------------------------
+Howto use it with Servlet
+-------------------------
+
+The best way to add Airbrake to your web project is to create a simple filter
+
+
+	import io.airbrake.*;
+
+	import java.io.*;
+	import java.util.*;
+	import javax.servlet.*;
 
 	public class AirbrakeFilter implements Filter {
 
@@ -130,6 +139,20 @@ Howto use it with Filter
 		public void destroy() {}
 
 	}
+
+
+and add it to your web.xml
+
+	<filter>
+		<filter-name>airbrake</filter-name>
+		<filter-class>AirbrakeFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>airbrake</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
 
 
 Setup different endpoint
