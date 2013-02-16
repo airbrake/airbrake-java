@@ -42,8 +42,6 @@ Howto use it
 Howto use it with new Airbrake API V3 (ALPHA)
 ---------------------------------------------
 
-Airbrake Notifier API V3 is in Alpha, and only works with a few Airbrake plans.
-
 	Airbrake airbrake = new Airbrake(YOUR_AIRBRAKE_API_KEY, YOUR_AIRBRAKE_PROJECT_ID);
 
 	try {
@@ -123,7 +121,7 @@ Howto use it with Filter
 				chain.doFilter(request, response);
 			} catch (Exception e) {
 				Map session = new HashMap(); // get session and put it into a map
-        Properties environment = System.getProperties();
+				Properties environment = System.getProperties();
 				airbrake.notify(e, session, request, environment);
 			}
 		}
@@ -144,8 +142,8 @@ Setup different endpoint
 Setup different endpoint (ALPHA)
 --------------------------------
 
-	new Airbrake(YOUR_AIRBRAKE_API_KEY, YOUR_AIRBRAKE_PROJECT_ID, "http://collect.airbrake.io");
-
+	Airbrake airbrake = new Airbrake(YOUR_AIRBRAKE_API_KEY, YOUR_AIRBRAKE_PROJECT_ID);
+	airbrake.setUrl("http://collect.airbrake.io");
 
 
 Support
@@ -156,5 +154,3 @@ For help with using Airbrake and this notifier visit [our support site](http://h
 For SSL verification see the [Resources](https://github.com/airbrake/airbrake/blob/master/resources/README.md).
 
 For any issues, please post then in our [Issues](https://github.com/airbrake/airbrake-java/issues).
-
-
