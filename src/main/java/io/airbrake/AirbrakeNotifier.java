@@ -189,11 +189,6 @@ public abstract class AirbrakeNotifier {
 
 	private void POST(String noticesUrl, String content, String contentType) {
 
-		System.out.println(noticesUrl);
-		System.out.println(content);
-
-		if (true) return;
-
 		HttpURLConnection connection = null;
 
 		try {

@@ -14,7 +14,7 @@ public class Airbrake {
 	private String paramAppVersion;
 	private String paramEnvironment;
 	private String paramProjectId;
-	private String paramUrlPrefix = "http://collect.airbrake.io";
+	private String paramUrl = "http://collect.airbrake.io";
 
 	private AirbrakeNotifier notice;
 
@@ -25,24 +25,25 @@ public class Airbrake {
 	public Airbrake(String apiKey) {
 		setV2();
 		setApiKey(apiKey);
-		setNoticesUrl("");
+		updateUrl();
 	}
 
 	public Airbrake(String apiKey, String projectId) {
 		setV3();
 		setApiKey(apiKey);
 		setProjectId(projectId);
-		setNoticesUrl(projectId);
+		updateUrl();
 	}
 
-	public Airbrake(String apiKey, String projectId, String domainAirbrake) {
+	public Airbrake(String apiKey, String projectId, String urlPrefix) {
 		setV3();
 		setApiKey(apiKey);
-		setNoticesUrl(projectId);
+		setUrlPrefix(urlPrefix);
+		updateUrl();
 	}
 
-	public void environment(String envName) {
-		setEnvName(envName);
+	private void setUrlPrefix(String urlPrefix) {
+		this.paramUrl = urlPrefix;
 	}
 
 	public void notify(Throwable throwable) {
@@ -80,19 +81,19 @@ public class Airbrake {
 		notice.setEnvironment(envName);
 	}
 
-	private void setNoticesUrl(String projectId) {
-		notice.setUrl(paramUrlPrefix, paramProjectId, paramApiKey);
+	private void updateUrl() {
+		notice.setUrl(paramUrl, paramProjectId, paramApiKey);
 	}
 
 	protected void setProjectId(String projectId) {
-		setV3();
 		this.paramProjectId = projectId;
-		setNoticesUrl(projectId);
+		setV3();
+		updateUrl();
 	}
 
-	protected void setUrl(String url) {
-		this.paramUrlPrefix = url;
-		setNoticesUrl(paramProjectId);
+	public void setUrl(String url) {
+		this.paramUrl = url;
+		updateUrl();
 	}
 
 	private void setV2() {
@@ -113,8 +114,9 @@ public class Airbrake {
 		filterStacktraceNoise.add(filter);
 	}
 
-	public void version(String appVersion) {
+	public void version(String appVersion, String envName) {
 		setAppVersion(appVersion);
+		setEnvName(envName);
 	}
 
 }

@@ -30,7 +30,20 @@ you need to add these libraries to your classpath
 Howto use it
 ------------------------------
 
-	Airbrake airbrake = new Airbrake(YOUR_AIRBRAKE_PROJECT_ID, YOUR_AIRBRAKE_PROJECT_ID);
+	Airbrake airbrake = new Airbrake(YOUR_AIRBRAKE_API_KEY);
+
+	try {
+		throw new RuntimeException("example1");
+	} catch (Exception e) {
+		airbrake.notify(e);
+	}
+
+
+Howto use it (ALPHA)
+------------------------------
+
+	// Notice: Airbrake Notifier API V3 is in Alpha, and only works with a few Airbrake plans
+	Airbrake airbrake = new Airbrake(YOUR_AIRBRAKE_API_KEY, YOUR_AIRBRAKE_PROJECT_ID);
 
 	try {
 		throw new RuntimeException("example1");
@@ -49,9 +62,11 @@ Howto use it with Log4J
 	log4j.appender.airbrake.enabled=true
 	log4j.appender.airbrake.url=http://collect.airbrake.io
 	log4j.appender.airbrake.apiKey=YOUR_AIRBRAKE_API_KEY
-	log4j.appender.airbrake.projectId=YOUR_AIRBRAKE_PROJECT_ID
 	log4j.appender.airbrake.envName=test
 	log4j.appender.airbrake.appVersion=1.0
+
+	// Notice: Airbrake Notifier API V3 is in Alpha, and only works with a few Airbrake plans
+	// log4j.appender.airbrake.projectId=YOUR_AIRBRAKE_PROJECT_ID
 
 or in XML format:
 
@@ -59,9 +74,11 @@ or in XML format:
 		<param name="enabled" value="true"/>
 		<param name="url" value="http://collect.airbrake.io"/>
 		<param name="apiKey" value="YOUR_AIRBRAKE_API_KEY"/>
-		<param name="projectId" value="YOUR_AIRBRAKE_PROJECT_ID"/>
 		<param name="envName" value="test"/>
 		<param name="appVersion" value="1.0"/>
+
+		<!-- Notice: Airbrake Notifier API V3 is in Alpha, and only works with a few Airbrake plans -->
+		<!--param name="projectId" value="YOUR_AIRBRAKE_PROJECT_ID"/-->
 	</appender>
 
 	<root>
@@ -79,7 +96,7 @@ Howto use it with Filter
 		@Override
 		public void init(FilterConfig filterConfig) throws ServletException {
 
-			airbrake = new Airbrake(YOUR_AIRBRAKE_PROJECT_ID, YOUR_AIRBRAKE_PROJECT_ID) {{
+			airbrake = new Airbrake(YOUR_AIRBRAKE_API_KEY) {{
 
 				version("1.0", "test");
 
@@ -119,8 +136,14 @@ Howto use it with Filter
 Setup different endpoint
 ------------------------
 
-	new Airbrake(YOUR_AIRBRAKE_PROJECT_ID, YOUR_AIRBRAKE_PROJECT_ID, "http://collect.airbrake.io");
+	Airbrake airbrake = new Airbrake(YOUR_AIRBRAKE_API_KEY);
+	airbrake.setUrl("http://collect.airbrake.io");
 
+
+Setup different endpoint (ALPHA)
+--------------------------------
+
+	new Airbrake(YOUR_AIRBRAKE_API_KEY, YOUR_AIRBRAKE_PROJECT_ID, "http://collect.airbrake.io");
 
 
 
