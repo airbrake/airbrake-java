@@ -51,10 +51,6 @@ public abstract class AirbrakeNotifier {
 			pop();
 		}
 
-		private String escape(String string) {
-			return string;
-		}
-
 		private void increment() {
 			stack.peek().incrementAndGet();
 		}
@@ -89,7 +85,7 @@ public abstract class AirbrakeNotifier {
 
 		protected void put(String name, String value) {
 			comma();
-			append("\"" + name + "\":\"" + escape(value) + "\"");
+			append("\"" + name + "\":\"" + escapeJson(value) + "\"");
 			increment();
 		}
 	}
@@ -112,7 +108,7 @@ public abstract class AirbrakeNotifier {
 			append("<");
 			append(tag);
 			for (int i = 0; i < attrValues.length; i += 2) {
-				append(" ", attrValues[i], "=\"", attrValues[i + 1], "\"");
+				append(" ", attrValues[i], "=\"", escapeXml(attrValues[i + 1]), "\"");
 			}
 			append(">");
 		}
@@ -128,13 +124,13 @@ public abstract class AirbrakeNotifier {
 
 		protected void put(String tag, String... attrValues) {
 			if (attrValues.length == 1) {
-				append("<", tag, ">", attrValues[0], "</", tag, ">");
+				append("<", tag, "><![CDATA[", attrValues[0], "]]></", tag, ">");
 			} else if (attrValues.length == 3) {
-				append("<", tag, " ", attrValues[0], "=\"", attrValues[1], "\">", attrValues[2], "</", tag, ">");
+				append("<", tag, " ", attrValues[0], "=\"", escapeXml(attrValues[1]), "\"><![CDATA[", attrValues[2], "]]></", tag, ">");
 			} else {
 				append("<", tag);
 				for (int i = 0; i < attrValues.length; i += 2) {
-					append(" ", attrValues[i], "=\"", attrValues[i + 1], "\"");
+					append(" ", attrValues[i], "=\"", escapeXml(attrValues[i + 1]), "\"");
 				}
 				append("/>");
 			}
@@ -143,15 +139,83 @@ public abstract class AirbrakeNotifier {
 		protected void text(String string) {
 			append(string);
 		}
+
 	}
 
-	protected final List<String> filterSensitiveData;
-	protected final List<String> filterStacktraceNoise;
+	protected static String escapeJson(String string) {
+		if (null == string) return "";
+		StringBuilder result = new StringBuilder();
+		for (int i = 0; i < string.length(); i++) {
+			char ch = string.charAt(i);
+			switch (ch) {
+			case '"':
+				result.append("\\\"");
+				break;
+			case '\\':
+				result.append("\\\\");
+				break;
+			case '\b':
+				result.append("\\b");
+				break;
+			case '\f':
+				result.append("\\f");
+				break;
+			case '\n':
+				result.append("\\n");
+				break;
+			case '\r':
+				result.append("\\r");
+				break;
+			case '\t':
+				result.append("\\t");
+				break;
+			// case '/':
+			// result.append("\\/");
+			// break;
+			default:
+				// Reference: http://www.unicode.org/versions/Unicode5.1.0/
+				if ((ch >= '\u0000' && ch <= '\u001F') || (ch >= '\u007F' && ch <= '\u009F') || (ch >= '\u2000' && ch <= '\u20FF')) {
+					String hex = Integer.toHexString(ch);
+					result.append("\\u");
+					for (int k = 0; k < 4 - hex.length(); k++) {
+						result.append('0');
+					}
+					result.append(hex.toUpperCase());
+				} else {
+					result.append(ch);
+				}
+			}
+		}
+		return result.toString();
+	}
 
-	private String url;
+	protected static String escapeXml(String string) {
+		if (null == string) return "";
+		boolean anyCharactersProtected = false;
+		StringBuilder stringBuffer = new StringBuilder();
+		for (int i = 0; i < string.length(); i++) {
+			char ch = string.charAt(i);
+			boolean controlCharacter = ch < 32;
+			boolean unicodeButNotAscii = ch > 126;
+			boolean characterWithSpecialMeaningInXML = ch == '<' || ch == '&' || ch == '>';
+			if (characterWithSpecialMeaningInXML || unicodeButNotAscii || controlCharacter) {
+				stringBuffer.append("&#" + (int) ch + ";");
+				anyCharactersProtected = true;
+			} else {
+				stringBuffer.append(ch);
+			}
+		}
+		if (anyCharactersProtected == false) return string;
+		return stringBuffer.toString();
+	}
+
 	protected String apiKey;
 	protected String appVersion;
+
 	protected String environment;
+	protected final List<String> filterSensitiveData;
+	protected final List<String> filterStacktraceNoise;
+	private String url;
 
 	public AirbrakeNotifier(List<String> filterStacktraceNoise, List<String> filterSensitiveData) {
 		this.filterStacktraceNoise = filterStacktraceNoise;
@@ -189,6 +253,8 @@ public abstract class AirbrakeNotifier {
 
 	private void POST(String noticesUrl, String content, String contentType) {
 
+		System.out.println(content);
+
 		HttpURLConnection connection = null;
 
 		try {
@@ -222,14 +288,6 @@ public abstract class AirbrakeNotifier {
 		return ((HttpServletRequest) request).getRequestURL().toString();
 	}
 
-	protected void setUrl(String url) {
-		this.url = url;
-	}
-
-	public abstract void setUrl(String urlPrefix, String projectId, String apikey);
-
-	protected abstract String toString(Throwable throwable, Map session, ServletRequest request, String environment, Properties properties, String version);
-
 	public void setApiKey(String apiKey) {
 		this.apiKey = apiKey;
 	}
@@ -241,4 +299,12 @@ public abstract class AirbrakeNotifier {
 	public void setEnvironment(String environment) {
 		this.environment = environment;
 	}
+
+	protected void setUrl(String url) {
+		this.url = url;
+	}
+
+	public abstract void setUrl(String urlPrefix, String projectId, String apikey);
+
+	protected abstract String toString(Throwable throwable, Map session, ServletRequest request, String environment, Properties properties, String version);
 }

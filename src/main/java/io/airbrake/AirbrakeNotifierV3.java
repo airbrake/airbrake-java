@@ -120,7 +120,7 @@ public class AirbrakeNotifierV3 extends AirbrakeNotifier {
 				Iterator<String> keys = vars.keySet().iterator();
 				while (keys.hasNext()) {
 					String key = keys.next();
-					if ("line.separator".equals(key)) continue;
+//					if ("line.separator".equals(key)) continue;
 					Object value = "[FILTERED]";
 					if (!filterSensitiveData.contains(key)) value = vars.get(key);
 					if (value instanceof List) {

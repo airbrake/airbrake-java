@@ -41,10 +41,13 @@ public class AirbrakeNotifierV2 extends AirbrakeNotifier {
 					begin("request");
 					{
 						put("url", requestUrl);
+						
 						begin("component");
 						end("component");
+						
 						begin("action");
 						end("action");
+						
 						begin("cgi-data");
 						putVars(getParamters(request));
 						end("cgi-data");
