@@ -45,8 +45,8 @@ public class XmlTest {
 						begin("cgi-data");
 						{
 							// for var in vars
-							put("var", "key", "attr", "value", "value");
-							put("var", "key", "creditCardNumber", "value", "[FILTERED]");
+							put("var", "key", "attr", "value");
+							put("var", "key", "creditCardNumber", "[FILTERED]");
 						}
 						end("cgi-data");
 					}

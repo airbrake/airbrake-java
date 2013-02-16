@@ -29,7 +29,7 @@ public class Airbrake {
 		}
 
 		private void notifyV2(Throwable throwable, Map session, ServletRequest request, Properties properties) {
-			POST(url, notice.toXml(throwable, session, request, paramEnvironment, properties, paramAppVersion), "application/xml");
+			POST(url, notice.toXml(throwable, session, request, paramEnvironment, properties, paramAppVersion, paramApiKey), "application/xml");
 		}
 
 		private void notifyV3(Throwable throwable, Map session, ServletRequest request, Properties properties) {
@@ -37,22 +37,18 @@ public class Airbrake {
 		}
 
 		private void POST(String noticesUrl, String content, String contentType) {
-			
+
 			System.out.println(content);
 
 			if (true) return;
 
-			URL url = null;
+			HttpURLConnection connection = null;
+			
 			try {
-				url = new URL(noticesUrl);
+				connection = (HttpURLConnection) new URL(noticesUrl).openConnection();
 			} catch (MalformedURLException e) {
 				System.err.println(e.getMessage());
 				return;
-			}
-
-			HttpURLConnection connection = null;
-			try {
-				connection = (HttpURLConnection) url.openConnection();
 			} catch (IOException e) {
 				System.err.println(e);
 				return;
