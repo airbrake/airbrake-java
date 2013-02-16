@@ -39,10 +39,11 @@ Howto use it
 	}
 
 
-Howto use it (ALPHA)
-------------------------------
+Howto use it with new Airbrake API V3 (ALPHA)
+---------------------------------------------
 
-	// Notice: Airbrake Notifier API V3 is in Alpha, and only works with a few Airbrake plans
+Airbrake Notifier API V3 is in Alpha, and only works with a few Airbrake plans.
+
 	Airbrake airbrake = new Airbrake(YOUR_AIRBRAKE_API_KEY, YOUR_AIRBRAKE_PROJECT_ID);
 
 	try {
