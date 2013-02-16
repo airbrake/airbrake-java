@@ -1,7 +1,5 @@
 package io.airbrake;
 
-import java.io.*;
-import java.net.*;
 import java.util.*;
 
 import javax.servlet.*;
@@ -9,90 +7,16 @@ import javax.servlet.http.*;
 
 public class Airbrake {
 
-	class Notifier {
-
-		private String url;
-
-		private final int version;
-
-		public Notifier() {
-			this(V2);
-		}
-
-		public Notifier(int version) {
-			this.version = version;
-		}
-
-		public void notify(Throwable throwable, Map session, ServletRequest request, Properties properties) {
-			if (V2 == version) notifyV2(throwable, session, request, properties);
-			if (V3 == version) notifyV3(throwable, session, request, properties);
-		}
-
-		private void notifyV2(Throwable throwable, Map session, ServletRequest request, Properties properties) {
-			POST(url, notice.toXml(throwable, session, request, paramEnvironment, properties, paramAppVersion, paramApiKey), "application/xml");
-		}
-
-		private void notifyV3(Throwable throwable, Map session, ServletRequest request, Properties properties) {
-			POST(url, notice.toJson(throwable, session, request, paramEnvironment, properties, paramAppVersion), "application/json");
-		}
-
-		private void POST(String noticesUrl, String content, String contentType) {
-
-			System.out.println(content);
-
-			if (true) return;
-
-			HttpURLConnection connection = null;
-			
-			try {
-				connection = (HttpURLConnection) new URL(noticesUrl).openConnection();
-			} catch (MalformedURLException e) {
-				System.err.println(e.getMessage());
-				return;
-			} catch (IOException e) {
-				System.err.println(e);
-				return;
-			}
-
-			try {
-				connection.setDoOutput(true);
-				connection.setRequestProperty("Content-type", contentType);
-				connection.setRequestMethod("POST");
-				OutputStream out = connection.getOutputStream();
-				out.write(content.getBytes());
-				out.flush();
-				out.close();
-				connection.getResponseCode();
-			} catch (IOException e) {
-				System.err.println(e.getMessage());
-			} finally {
-				connection.disconnect();
-			}
-		}
-
-		public void setNoticesUrl(String projectId) {
-			if (V2 == version) this.url = paramUrlPrefix + "/notifier_api/v2/notices";
-			if (V3 == version) this.url = paramUrlPrefix + "/api/v3/projects/" + projectId + "/notices" + "?key=" + paramApiKey;
-		}
-
-	}
-
-	public static final int V2 = 2;
-
-	public static final int V3 = 3;
-
 	private final List<String> filterSensitiveData = new ArrayList<String>();
 	private final List<String> filterStacktraceNoise = new ArrayList<String>();
-
-	private final AirbrakeNotice notice = new AirbrakeNotice(filterStacktraceNoise, filterSensitiveData);
-
-	private Notifier notifier = new Notifier();
 
 	private String paramApiKey;
 	private String paramAppVersion;
 	private String paramEnvironment;
 	private String paramProjectId;
 	private String paramUrlPrefix = "http://collect.airbrake.io";
+
+	private AirbrakeNotifier notice;
 
 	public Airbrake() {
 		setV2();
@@ -130,7 +54,7 @@ public class Airbrake {
 	}
 
 	public void notify(Throwable throwable, Map session, ServletRequest request, Properties properties) {
-		notifier.notify(throwable, session, request, properties);
+		notice.notify(throwable, session, request, paramEnvironment, properties, paramAppVersion);
 	}
 
 	public void notify(Throwable throwable, Properties properties) {
@@ -143,18 +67,21 @@ public class Airbrake {
 
 	protected void setApiKey(String apiKey) {
 		this.paramApiKey = apiKey;
+		notice.setApiKey(apiKey);
 	}
 
 	public void setAppVersion(String appVersion) {
 		this.paramAppVersion = appVersion;
+		notice.setAppVersion(appVersion);
 	}
 
 	public void setEnvName(String envName) {
 		this.paramEnvironment = envName;
+		notice.setEnvironment(envName);
 	}
 
 	private void setNoticesUrl(String projectId) {
-		notifier.setNoticesUrl(projectId);
+		notice.setUrl(paramUrlPrefix, paramProjectId, paramApiKey);
 	}
 
 	protected void setProjectId(String projectId) {
@@ -169,11 +96,17 @@ public class Airbrake {
 	}
 
 	private void setV2() {
-		notifier = new Notifier(V2);
+		notice = new AirbrakeNotifierV2(filterStacktraceNoise, filterSensitiveData);
+		notice.setApiKey(paramApiKey);
+		notice.setAppVersion(paramAppVersion);
+		notice.setEnvironment(paramEnvironment);
 	}
 
 	private void setV3() {
-		notifier = new Notifier(V3);
+		notice = new AirbrakeNotifierV3(filterStacktraceNoise, filterSensitiveData);
+		notice.setApiKey(paramApiKey);
+		notice.setAppVersion(paramAppVersion);
+		notice.setEnvironment(paramEnvironment);
 	}
 
 	public void stacktraceFilter(String filter) {

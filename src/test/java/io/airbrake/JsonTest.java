@@ -11,7 +11,7 @@ public class JsonTest {
 	@Test
 	public void testJson() {
 
-		new AirbrakeNotice.Json(System.out) {
+		new AirbrakeNotifier.Json(System.out) {
 			{
 				object();
 				{

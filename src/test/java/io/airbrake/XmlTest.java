@@ -8,7 +8,7 @@ public class XmlTest {
 	@Test
 	public void testJson() {
 
-		new AirbrakeNotice.Xml(System.out) {
+		new AirbrakeNotifier.Xml(System.out) {
 			{
 				begin("notice", "version", "2.3");
 				{
