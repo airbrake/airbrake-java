@@ -81,10 +81,7 @@ Howto use it with Filter
 
 			airbrake = new Airbrake(YOUR_AIRBRAKE_PROJECT_ID, YOUR_AIRBRAKE_PROJECT_ID) {{
 
-				version("1.0");
-
-				// to collect inforation about your environment
-				environment("test");
+				version("1.0", "test");
 
 				// to replace sensitive information sent to the Airbrake service with [FILTERED]
 				sensitiveFilter("creditCardNumber");
@@ -107,7 +104,9 @@ Howto use it with Filter
 			try {
 				chain.doFilter(request, response);
 			} catch (Exception e) {
-				airbrake.notify(e, new HashMap(), request, System.getProperties());
+				Map session = new HashMap(); // get session and put it into a map
+        Properties environment = System.getProperties();
+				airbrake.notify(e, session, request, environment);
 			}
 		}
 	
