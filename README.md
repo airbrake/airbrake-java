@@ -17,7 +17,7 @@ Setting up with Maven
     		<dependency>
       		<groupId>io.airbrake</groupId>
       		<artifactId>airbrake-java</artifactId>
-      		<version>2.2.6/version>
+      		<version>2.2.6</version>
     		</dependency>
   		</dependencies>
 	</project>
