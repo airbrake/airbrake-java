@@ -48,8 +48,16 @@ public class AirbrakeNotifierV2 extends AirbrakeNotifier {
 						begin("action");
 						end("action");
 						
-						begin("cgi-data");
+						begin("params");
 						putVars(getParamters(request));
+						end("params");
+
+						begin("session");
+						putVars(getParamters(session));
+						end("session");
+						
+						begin("cgi-data");
+						putVars(getParamters(properties));
 						end("cgi-data");
 					}
 					end("request");
