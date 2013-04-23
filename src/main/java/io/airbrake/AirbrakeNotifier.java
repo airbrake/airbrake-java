@@ -228,6 +228,7 @@ public abstract class AirbrakeNotifier {
 	}
 
 	protected Map getParamters(Map map) {
+		if (null == map) return new HashMap();
 		return map;
 	}
 
