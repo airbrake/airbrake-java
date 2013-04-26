@@ -85,16 +85,26 @@ public class AirbrakeNotifierV2 extends AirbrakeNotifier {
 					put("message", errorMessage);
 					begin("backtrace");
 					{
-						putBacktrace(throwable.getStackTrace());
+						putBacktraces(throwable);
 					}
 					end("backtrace");
 				}
 				end("error");
+			}
 
+			private void putBacktraces(Throwable throwable) {
+				if (null == throwable) return;
+				String errorType = throwable.getClass().getName();
+				String errorMessage = throwable.getMessage();
+				
+				put("line", "method", "Backtrace:", "file", "Caused by " + errorMessage, "number", "-1");
+				
+				putBacktrace(throwable.getStackTrace());
+				
 				Throwable cause = throwable.getCause();
 				if (null == cause) return;
 				if (cause.equals(throwable)) return;
-				putErrors(cause);
+				putBacktraces(cause);
 			}
 
 			private void putBacktrace(StackTraceElement[] stackTrace) {
