@@ -271,6 +271,14 @@ public abstract class AirbrakeNotifier {
 		return request.getParameterMap();
 	}
 
+	protected String getRequestComponent(ServletRequest request) {
+		return ((HttpServletRequest) request).getServletPath();
+	}
+	
+	protected String getRequestAction(ServletRequest request) {
+		return ((HttpServletRequest) request).getMethod();
+	}
+	
 	public void notify(Throwable throwable, Map session, ServletRequest request, String environment, Properties properties, String version) {
 		POST(url, toString(throwable, session, request, environment, properties, version), "application/xml");
 	}

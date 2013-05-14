@@ -42,11 +42,9 @@ public class AirbrakeNotifierV2 extends AirbrakeNotifier {
 					{
 						put("url", requestUrl);
 						
-						begin("component");
-						end("component");
+						put("component", getRequestComponent(request));
 						
-						begin("action");
-						end("action");
+						put("action", getRequestAction(request));
 						
 						begin("params");
 						putVars(getParamters(request));
