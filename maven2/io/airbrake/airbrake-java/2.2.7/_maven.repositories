@@ -1,0 +1,10 @@
+#NOTE: This is an internal implementation file, its format can be changed without prior notice.
+#Wed Jun 05 21:22:22 CEST 2013
+airbrake-java-2.2.7.pom>=
+airbrake-java-2.2.7-javadoc.jar>=
+airbrake-java-2.2.7.pom.asc>=
+airbrake-java-2.2.7-javadoc.jar.asc>=
+airbrake-java-2.2.7-sources.jar>=
+airbrake-java-2.2.7.jar.asc>=
+airbrake-java-2.2.7.jar>=
+airbrake-java-2.2.7-sources.jar.asc>=
