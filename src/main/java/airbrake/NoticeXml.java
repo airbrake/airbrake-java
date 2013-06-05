@@ -12,7 +12,7 @@ public class NoticeXml {
 	private final StringBuilder stringBuilder = new StringBuilder();
 
 	public NoticeXml(AirbrakeNotice notice) {
-		
+
 		notice("2.2");
 		{
 			apikey(notice);
@@ -28,7 +28,7 @@ public class NoticeXml {
 			error();
 			{
 				tag("class", notice.errorClass());
-				tag("message", notice.errorMessage());
+				tag("message", escapeXml(notice.errorMessage()));
 
 				backtrace();
 				{
@@ -155,5 +155,29 @@ public class NoticeXml {
 
 	private void version(String version) {
 		tag("version", version);
+	}
+
+	protected static String escapeXml(String string) {
+		if (null == string)
+			return "";
+		boolean anyCharactersProtected = false;
+		StringBuilder stringBuffer = new StringBuilder();
+		for (int i = 0; i < string.length(); i++) {
+			char ch = string.charAt(i);
+			boolean controlCharacter = ch < 32;
+			boolean unicodeButNotAscii = ch > 126;
+			boolean characterWithSpecialMeaningInXML = ch == '<' || ch == '&'
+					|| ch == '>';
+			if (characterWithSpecialMeaningInXML || unicodeButNotAscii
+					|| controlCharacter) {
+				stringBuffer.append("&#" + (int) ch + ";");
+				anyCharactersProtected = true;
+			} else {
+				stringBuffer.append(ch);
+			}
+		}
+		if (anyCharactersProtected == false)
+			return string;
+		return stringBuffer.toString();
 	}
 }

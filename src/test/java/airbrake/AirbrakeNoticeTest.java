@@ -16,7 +16,7 @@ import org.apache.commons.logging.*;
 import org.junit.*;
 
 public class AirbrakeNoticeTest {
-	protected static final Backtrace BACKTRACE = new Backtrace(asList("backtrace is empty"));;
+	protected static final Backtrace BACKTRACE = new Backtrace(asList("backtrace is empty"));
 	protected static final Map<String, Object> REQUEST = new HashMap<String, Object>();
 	protected static final Map<String, Object> ENVIRONMENT = new HashMap<String, Object>();
 
