@@ -157,7 +157,7 @@ public class NoticeXml {
 		tag("version", version);
 	}
 
-	protected static String escapeXml(String string) {
+	public static String escapeXml(String string) {
 		if (null == string)
 			return "";
 		boolean anyCharactersProtected = false;
