@@ -2,6 +2,7 @@ package io.airbrake;
 
 import java.io.*;
 import java.net.*;
+import java.nio.charset.Charset;
 import java.util.*;
 import java.util.concurrent.atomic.*;
 
@@ -228,6 +229,7 @@ public abstract class AirbrakeNotifier {
 	}
 
 	protected Map getParamters(Map map) {
+		if (null == map) return new HashMap();
 		return map;
 	}
 
@@ -244,9 +246,39 @@ public abstract class AirbrakeNotifier {
 
 	protected Map getParamters(ServletRequest request) {
 		if (null == request) return new HashMap();
+		Charset enc, unicode = Charset.forName("UTF-8");
+		if (null == request.getCharacterEncoding()) {
+			enc = Charset.forName("ISO-8859-1");
+		} else {
+			enc = Charset.forName(request.getCharacterEncoding());
+		}
+		
+		if (unicode != enc) {
+			Map<String, String> paramsUtf8 = new HashMap<String, String>();
+			
+			Enumeration params = request.getParameterNames();
+			while (params.hasMoreElements()) {
+				String origKey = params.nextElement().toString();
+				String origValue = request.getParameter(origKey);
+				
+				String key = new String(origKey.getBytes(enc), unicode);
+				String value = new String(origValue.getBytes(enc), unicode);
+				paramsUtf8.put(key, value);
+			}
+			
+			return paramsUtf8;
+		}
 		return request.getParameterMap();
 	}
 
+	protected String getRequestComponent(ServletRequest request) {
+		return ((HttpServletRequest) request).getServletPath();
+	}
+	
+	protected String getRequestAction(ServletRequest request) {
+		return ((HttpServletRequest) request).getMethod();
+	}
+	
 	public void notify(Throwable throwable, Map session, ServletRequest request, String environment, Properties properties, String version) {
 		POST(url, toString(throwable, session, request, environment, properties, version), "application/xml");
 	}
