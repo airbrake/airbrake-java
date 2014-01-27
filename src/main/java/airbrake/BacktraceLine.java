@@ -4,7 +4,7 @@
 
 package airbrake;
 
-import static java.text.MessageFormat.*;
+import static java.text.MessageFormat.format;
 
 public class BacktraceLine {
 
@@ -79,6 +79,11 @@ public class BacktraceLine {
 	}
 
 	public String toXml() {
-		return format("<line method=\"{0}.{1}\" file=\"{2}\" number=\"{3}\"/>", className, methodName, fileName, lineNumber);
+		return format("<line method=\"{0}.{1}\" file=\"{2}\" number=\"{3}\"/>", 
+		  NoticeXml.escapeXml(className),
+		  NoticeXml.escapeXml(methodName),
+		  fileName,
+		  lineNumber
+		);
 	}
 }

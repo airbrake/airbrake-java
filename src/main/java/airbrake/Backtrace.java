@@ -4,11 +4,12 @@
 
 package airbrake;
 
-import static airbrake.ValidBacktraces.*;
-
-import java.text.*;
-import java.util.*;
-import java.util.regex.*;
+import java.text.MessageFormat;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.regex.Pattern;
 
 public class Backtrace implements Iterable<String> {
 
