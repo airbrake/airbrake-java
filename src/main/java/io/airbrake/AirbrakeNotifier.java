@@ -272,11 +272,11 @@ public abstract class AirbrakeNotifier {
 	}
 
 	protected String getRequestComponent(ServletRequest request) {
-		return ((HttpServletRequest) request).getServletPath();
+		return request != null ? ((HttpServletRequest) request).getServletPath() : null;
 	}
 	
 	protected String getRequestAction(ServletRequest request) {
-		return ((HttpServletRequest) request).getMethod();
+		return request != null ? ((HttpServletRequest) request).getMethod() : null;
 	}
 	
 	public void notify(Throwable throwable, Map session, ServletRequest request, String environment, Properties properties, String version) {
