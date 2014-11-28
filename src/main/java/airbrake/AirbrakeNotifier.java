@@ -26,7 +26,7 @@ public class AirbrakeNotifier {
 	private String url;
 
 	public AirbrakeNotifier() {
-		setUrl("http://api.airbrake.io/notifier_api/v2/notices");
+		setUrl("http://airbrake.pwa.ru.aligntech.com/notifier_api/v2/notices");
 	}
 
 	public AirbrakeNotifier(String url) {

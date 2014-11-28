@@ -4,6 +4,8 @@
 
 package airbrake;
 
+import ch.qos.logback.classic.spi.IThrowableProxy;
+
 public class SwitchBacktrace extends Backtrace {
 
 	private static final QuietRubyBacktrace QuietRubyBacktrace = new QuietRubyBacktrace();
@@ -13,7 +15,7 @@ public class SwitchBacktrace extends Backtrace {
 	private Backtrace backtrace = Backtrace;
 
 	@Override
-	public airbrake.Backtrace newBacktrace(final Throwable throwable) {
+	public airbrake.Backtrace newBacktrace(final IThrowableProxy throwable) {
 		return backtrace.newBacktrace(throwable);
 	}
 

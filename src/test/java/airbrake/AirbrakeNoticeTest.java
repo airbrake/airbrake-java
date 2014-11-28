@@ -12,15 +12,17 @@ import static org.junit.Assert.*;
 
 import java.util.*;
 
-import org.apache.commons.logging.*;
+import ch.qos.logback.classic.spi.IThrowableProxy;
 import org.junit.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AirbrakeNoticeTest {
 	protected static final Backtrace BACKTRACE = new Backtrace(asList("backtrace is empty"));
 	protected static final Map<String, Object> REQUEST = new HashMap<String, Object>();
 	protected static final Map<String, Object> ENVIRONMENT = new HashMap<String, Object>();
 
-	private final Log logger = LogFactory.getLog(getClass());
+	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	private final Map<String, Object> EC2 = new HashMap<String, Object>();
 
@@ -57,7 +59,7 @@ public class AirbrakeNoticeTest {
 
 	@Test
 	public void testNewAirbrakeUsingBuilderNoticeFromException() {
-		final Exception EXCEPTION = newException(ERROR_MESSAGE);
+		final IThrowableProxy EXCEPTION = newException(ERROR_MESSAGE);
 		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, EXCEPTION).newNotice();
 
 		assertThat(notice, is(notNullValue()));

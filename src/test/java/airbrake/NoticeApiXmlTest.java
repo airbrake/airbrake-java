@@ -7,6 +7,7 @@ package airbrake;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
+import ch.qos.logback.classic.spi.ThrowableProxy;
 import org.junit.*;
 
 public class NoticeApiXmlTest {
@@ -19,7 +20,7 @@ public class NoticeApiXmlTest {
 
 	@Before
 	public void setUp() {
-		notice = new AirbrakeNoticeBuilder("apiKey", new RuntimeException("errorMessage")).newNotice();
+		notice = new AirbrakeNoticeBuilder("apiKey", new ThrowableProxy(new RuntimeException("errorMessage"))).newNotice();
 	}
 
 	@Test
