@@ -4,6 +4,9 @@
 
 package airbrake;
 
+import ch.qos.logback.classic.spi.IThrowableProxy;
+import ch.qos.logback.classic.spi.StackTraceElementProxy;
+
 import static airbrake.ValidBacktraces.*;
 
 import java.text.*;
@@ -25,7 +28,7 @@ public class Backtrace implements Iterable<String> {
 
 	private final List<String> filteredBacktrace = new LinkedList<String>();
 
-	protected Backtrace() {
+	public Backtrace() {
 	}
 
 	public Backtrace(final List<String> backtrace) {
@@ -34,14 +37,14 @@ public class Backtrace implements Iterable<String> {
 		filter();
 	}
 
-	public Backtrace(final Throwable throwable) {
+	public Backtrace(final IThrowableProxy throwable) {
 		toBacktrace(throwable);
 		ignore(".*" + Pattern.quote(messageIn(throwable)) + ".*");
 		ignore();
 		filter();
 	}
 
-	private String causedBy(final Throwable throwable) {
+	private String causedBy(final IThrowableProxy throwable) {
 		return MessageFormat.format("Caused by {0}", messageIn(throwable));
 	}
 
@@ -166,10 +169,10 @@ public class Backtrace implements Iterable<String> {
 		return filteredBacktrace.iterator();
 	}
 
-	private String messageIn(final Throwable throwable) {
+	private String messageIn(final IThrowableProxy throwable) {
 		String message = throwable.getMessage();
 		if (message == null) {
-			message = throwable.getClass().getName();
+			message = throwable.getClassName();
 		}
 		return message;
 	}
@@ -186,7 +189,7 @@ public class Backtrace implements Iterable<String> {
 		return filteredBacktrace.isEmpty();
 	}
 
-	public Backtrace newBacktrace(final Throwable throwable) {
+	public Backtrace newBacktrace(final IThrowableProxy throwable) {
 		return new Backtrace(throwable);
 	}
 
@@ -205,13 +208,13 @@ public class Backtrace implements Iterable<String> {
 				.toString();
 	}
 
-	private void toBacktrace(final Throwable throwable) {
+	private void toBacktrace(final IThrowableProxy throwable) {
 		if (throwable == null)
 			return;
 
 		backtrace.add(causedBy(throwable));
-		for (final StackTraceElement element : throwable.getStackTrace()) {
-			backtrace.add(toBacktrace(element));
+		for (final StackTraceElementProxy element : throwable.getStackTraceElementProxyArray()) {
+			backtrace.add(toBacktrace(element.getStackTraceElement()));
 		}
 
 		toBacktrace(throwable.getCause());

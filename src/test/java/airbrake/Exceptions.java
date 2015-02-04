@@ -4,18 +4,22 @@
 
 package airbrake;
 
+import ch.qos.logback.classic.spi.IThrowableProxy;
+import ch.qos.logback.classic.spi.ThrowableProxy;
+
 public class Exceptions {
 	
 	protected static final String ERROR_MESSAGE = "undefined method `password' for nil:NilClass";
 
-	public static final Exception newException(final String errorMessage) {
+	public static IThrowableProxy newException(final String errorMessage) {
+
 		final String string = null;
 		try {
 			string.toString();
 		} catch (final Exception e) {
-			return new RuntimeException(errorMessage, e);
+			return new ThrowableProxy(new RuntimeException(errorMessage, e));
 		}
-		return newException(errorMessage);
+		return new ThrowableProxy(new RuntimeException(errorMessage));
 	}
 
 }

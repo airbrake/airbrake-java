@@ -4,14 +4,16 @@ import static airbrake.ApiKeys.*;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
+import ch.qos.logback.classic.spi.IThrowableProxy;
+import ch.qos.logback.classic.spi.ThrowableProxy;
 import org.junit.*;
 
 public class NoticeApiXmlBuilderTest {
 
 	private AirbrakeNoticeBuilder productionNoticeBuilder;
 
-	private RuntimeException newThrowable() {
-		return new RuntimeException("errorMessage");
+	private IThrowableProxy newThrowable() {
+		return new ThrowableProxy(new RuntimeException("errorMessage"));
 	}
 
 	@Before

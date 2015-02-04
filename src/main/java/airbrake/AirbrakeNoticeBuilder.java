@@ -4,6 +4,8 @@
 
 package airbrake;
 
+import ch.qos.logback.classic.spi.IThrowableProxy;
+
 import static java.util.Arrays.*;
 
 import java.util.*;
@@ -39,7 +41,7 @@ public class AirbrakeNoticeBuilder {
 
 	private String component;
 
-	public AirbrakeNoticeBuilder(final String apiKey, final Backtrace backtraceBuilder, final Throwable throwable, final String env) {
+	public AirbrakeNoticeBuilder(final String apiKey, final Backtrace backtraceBuilder, final IThrowableProxy throwable, final String env) {
 		this(apiKey, throwable.getMessage(), env);
 		this.backtraceBuilder = backtraceBuilder;
 		errorClass(throwable);
@@ -56,15 +58,15 @@ public class AirbrakeNoticeBuilder {
 		env(env);
 	}
 
-	public AirbrakeNoticeBuilder(final String apiKey, final Throwable throwable) {
+	public AirbrakeNoticeBuilder(final String apiKey, final IThrowableProxy throwable) {
 		this(apiKey, new Backtrace(), throwable, "test");
 	}
 
-	public AirbrakeNoticeBuilder(final String apiKey, final Throwable throwable, final String env) {
+	public AirbrakeNoticeBuilder(final String apiKey, final IThrowableProxy throwable, final String env) {
 		this(apiKey, new Backtrace(), throwable, env);
 	}
 
-	public AirbrakeNoticeBuilder(final String apiKey, final Throwable throwable, final String projectRoot, final String env) {
+	public AirbrakeNoticeBuilder(final String apiKey, final IThrowableProxy throwable, final String projectRoot, final String env) {
 		this(apiKey, new Backtrace(), throwable, env);
 		projectRoot(projectRoot);
 	}
@@ -88,7 +90,7 @@ public class AirbrakeNoticeBuilder {
 		this.backtrace = backtrace;
 	}
 
-	private void backtrace(final Throwable throwable) {
+	private void backtrace(final IThrowableProxy throwable) {
 		backtrace(backtraceBuilder.newBacktrace(throwable));
 	}
 
@@ -125,10 +127,10 @@ public class AirbrakeNoticeBuilder {
 		throw new RuntimeException(message);
 	}
 
-	private void errorClass(Throwable throwable) {
-		this.errorClass = throwable.getClass().getName();
+	private void errorClass(IThrowableProxy throwable) {
+		this.errorClass = throwable.getClassName();
 		if (errorMessage == null || errorMessage.trim().isEmpty()) {
-			errorMessage = '[' + throwable.getClass().toString() + ']';
+			errorMessage = '[' + throwable.getClassName() + ']';
 		}
 	}
 

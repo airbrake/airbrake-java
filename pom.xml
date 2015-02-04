@@ -9,7 +9,7 @@
   <groupId>io.airbrake</groupId>
   <artifactId>airbrake-java</artifactId>
   <packaging>jar</packaging>
-  <version>2.2.9-SNAPSHOT</version>
+  <version>2.2.10-SNAPSHOT</version>
   <name>Airbrake Notifier Java</name>
   <description>This is the official library to notify exception to Airbrake.io</description>
   <url>https://airbrake.io</url>
@@ -32,6 +32,12 @@
       <email>luca.marrocco@gmail.com</email>
       <url>https://github.com/lucamarrocco</url>
     </developer>
+    <developer>
+      <id>snslabs</id>
+      <name>Serge Lyubimov</name>
+      <email>snslabs@gmail.com</email>
+      <url>https://github.com/snslabs</url>
+    </developer>
   </developers>
   <dependencies>
     <dependency>
@@ -45,11 +51,8 @@
       <version>2.4</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.14</version>
-    </dependency>
+
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -68,8 +71,30 @@
       <version>1.1</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.7</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.0.13</version>
+    </dependency>
+
   </dependencies>
   <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>cobertura-maven-plugin</artifactId>
+          <version>2.6</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -121,6 +146,11 @@
         <artifactId>maven-release-plugin</artifactId>
         <version>2.0-beta-9</version>
       </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+        <version>2.6</version>
+      </plugin>
     </plugins>
   </build>
   <reporting>
@@ -130,6 +160,11 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>2.8.1</version>
       </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>cobertura-maven-plugin</artifactId>
+          <version>2.6</version>
+        </plugin>
     </plugins>
   </reporting>
 </project>

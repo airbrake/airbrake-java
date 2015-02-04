@@ -13,9 +13,12 @@ import static org.junit.Assert.*;
 
 import java.util.*;
 
-import org.apache.commons.logging.*;
+
+import ch.qos.logback.classic.spi.IThrowableProxy;
 import org.hamcrest.*;
 import org.junit.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AirbrakeNotifierTest {
 
@@ -24,7 +27,7 @@ public class AirbrakeNotifierTest {
 	protected static final Map<String, Object> SESSION = new HashMap<String, Object>();
 	protected static final Map<String, Object> ENVIRONMENT = new HashMap<String, Object>();
 
-	private final Log logger = LogFactory.getLog(getClass());
+	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	private final Map<String, Object> EC2 = new HashMap<String, Object>();
 
@@ -93,7 +96,7 @@ public class AirbrakeNotifierTest {
 
 	@Test
 	public void testNotifyToairbrakeUsingBuilderNoticeFromExceptionInEnv() {
-		final Exception EXCEPTION = newException(ERROR_MESSAGE);
+		final IThrowableProxy EXCEPTION = newException(ERROR_MESSAGE);
 		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, EXCEPTION, "test").newNotice();
 
 		assertThat(notifier.notify(notice), is(200));
@@ -101,7 +104,7 @@ public class AirbrakeNotifierTest {
 
 	@Test
 	public void testNotifyToairbrakeUsingBuilderNoticeFromExceptionInEnvAndSystemProperties() {
-		final Exception EXCEPTION = newException(ERROR_MESSAGE);
+		final IThrowableProxy EXCEPTION = newException(ERROR_MESSAGE);
 		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, EXCEPTION, "test") {
 			{
 				filteredSystemProperties();
@@ -121,7 +124,7 @@ public class AirbrakeNotifierTest {
 
 	@Test
 	public void testSendExceptionNoticeWithFilteredBacktrace() {
-		final Exception EXCEPTION = newException(ERROR_MESSAGE);
+		final IThrowableProxy EXCEPTION = newException(ERROR_MESSAGE);
 		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, new QuietRubyBacktrace(), EXCEPTION, "test").newNotice();
 
 		assertThat(notifier.notify(notice), is(200));
@@ -129,7 +132,7 @@ public class AirbrakeNotifierTest {
 
 	@Test
 	public void testSendExceptionToairbrake() {
-		final Exception EXCEPTION = newException(ERROR_MESSAGE);
+		final IThrowableProxy EXCEPTION = newException(ERROR_MESSAGE);
 		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, EXCEPTION).newNotice();
 
 		assertThat(notifier.notify(notice), is(200));
@@ -137,7 +140,7 @@ public class AirbrakeNotifierTest {
 
 	@Test
 	public void testSendExceptionToairbrakeUsingRubyBacktrace() {
-		final Exception EXCEPTION = newException(ERROR_MESSAGE);
+		final IThrowableProxy EXCEPTION = newException(ERROR_MESSAGE);
 		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, new RubyBacktrace(), EXCEPTION, "test").newNotice();
 
 		assertThat(notifier.notify(notice), is(200));
@@ -145,7 +148,7 @@ public class AirbrakeNotifierTest {
 
 	@Test
 	public void testSendExceptionToairbrakeUsingRubyBacktraceAndFilteredSystemProperties() {
-		final Exception EXCEPTION = newException(ERROR_MESSAGE);
+		final IThrowableProxy EXCEPTION = newException(ERROR_MESSAGE);
 		final AirbrakeNotice notice = new AirbrakeNoticeBuilderUsingFilteredSystemProperties(API_KEY, new RubyBacktrace(), EXCEPTION, "test").newNotice();
 
 		assertThat(notifier.notify(notice), is(200));
