@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.*;
 
+import airbrake.stacktrace.BacktraceLine;
+
 public class BacktraceLineTest {
 
 	@Test
