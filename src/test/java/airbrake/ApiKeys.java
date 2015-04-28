@@ -2,6 +2,6 @@ package airbrake;
 
 public class ApiKeys {
 
-	public static final String API_KEY = "fd1369b42bee5ccc9f5fdb7d31981ae1";
+	public static final String API_KEY = "6970ff8807b4fc4959d41e21b2edd9b6";
 
 }
