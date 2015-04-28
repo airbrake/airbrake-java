@@ -7,8 +7,6 @@ package airbrake;
 import java.util.*;
 import java.util.Map.Entry;
 
-import airbrake.stacktrace.BacktraceLine;
-
 public class NoticeXml {
 
 	private final StringBuilder stringBuilder = new StringBuilder();
@@ -35,7 +33,7 @@ public class NoticeXml {
 				backtrace();
 				{
 					for (final String backtrace : notice.backtrace()) {
-						line(backtrace, notice.getLineReader());
+						line(backtrace);
 					}
 				}
 				end("backtrace");
@@ -92,8 +90,8 @@ public class NoticeXml {
 		tag("error");
 	}
 
-	private void line(String backtrace, BacktraceLine backtraceLine) {
-		append(backtraceLine.acceptLine(backtrace).toXml());
+	private void line(String backtrace) {
+		append(new BacktraceLine(backtrace).toXml());
 	}
 
 	private void name(String name) {
