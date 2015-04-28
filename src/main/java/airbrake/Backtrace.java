@@ -209,6 +209,12 @@ public class Backtrace implements Iterable<String> {
 		return string.replaceAll(":", "");
 	}
 
+	protected String toBacktrace(final String className, final String fileName,
+			final int lineNumber, final String methodName) {
+		return new JavaBacktraceLine(className, fileName, lineNumber, methodName)
+				.toString();
+	}
+		
 	private String toBacktrace(final StackTraceElement element) {
 		return new JavaBacktraceLine(element).toString();
 	}

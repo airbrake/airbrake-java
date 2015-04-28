@@ -67,7 +67,7 @@ public class AirbrakeAppenderTest {
 	public void testNotyfyThrowable$UseRubyBacktrace() {
 		final AirbrakeAppender appender = new AirbrakeAppender(API_KEY, new RubyBacktrace());
 
-		final AirbrakeNotice notice = appender.newNoticeFor(newException(ERROR_MESSAGE));
+ 		final AirbrakeNotice notice = appender.newNoticeFor(newException(ERROR_MESSAGE));
 
 		assertThat(notice.backtrace(), hasItem("at airbrake.Exceptions.java:16:in `newException'"));
 		assertThat(notice.backtrace(), hasItem("Caused by java.lang.NullPointerException"));

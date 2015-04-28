@@ -62,15 +62,15 @@ public class JavaBacktraceLine implements BacktraceLine {
 		this.methodName = methodName;
 	}
 
-	String className() {
+	public String className() {
 		return className;
 	}
 
-	String fileName() {
+	public String fileName() {
 		return fileName;
 	}
 
-	int lineNumber() {
+	public int lineNumber() {
 		return lineNumber;
 	}
 

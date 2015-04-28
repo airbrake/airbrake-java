@@ -54,6 +54,10 @@ public class AirbrakeNotice {
 		this.component = component;
 		filter(environment, environmentFilters);
 	}
+	public AirbrakeNotice(final String apiKey, String projectRoot, String environmentName, final String errorMessage, String errorClass, final Backtrace backtrace, final Map<String, Object> request, final Map<String, Object> session, final Map<String, Object> environment,
+			final List<String> environmentFilters, boolean hasRequest, String url, String component, BacktraceLine backtraceLine) {
+		super(apiKey, projectRoot, environmentName, errorMessage, errorClass, back);
+	}
 
 	public String apiKey() {
 		return apiKey;
