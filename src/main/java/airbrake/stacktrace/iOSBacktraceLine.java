@@ -26,7 +26,8 @@ public class iOSBacktraceLine implements BacktraceLine {
 
 	public BacktraceLine acceptLine(String line) {
 		Matcher m = p.matcher(line);
-		if(m.matches() && m.groupCount() == 5) {
+		Boolean b = m.matches();
+		if(b && m.groupCount() == 4) {
 			this.crashLocation = m.group(1);
 			this.memAddress = m.group(2);
 			this.command = m.group(3);
