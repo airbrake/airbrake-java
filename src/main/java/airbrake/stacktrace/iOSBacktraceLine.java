@@ -17,8 +17,15 @@ public class iOSBacktraceLine implements BacktraceLine {
 	private String memAddress;
 	private String command;
 	private String offset;
+	private Boolean showMemAddress = true;
 	
 	private static Pattern p = Pattern.compile("^[0-9]+[ ]*(?<crashlocation>[A-Za-z_.?]+)[ ]+(?<memaddress>[^ ]+)[ ]+(?<command>(?:.(?!\\+ [0-9]+$))+) \\+ (?<offset>[0-9]+)$");
+	
+	public iOSBacktraceLine() {}
+	
+	public iOSBacktraceLine(Boolean showMemAddress) {
+		this.showMemAddress = showMemAddress;
+	}
 	
 	public iOSBacktraceLine(String line) {
 		this.acceptLine(line);
@@ -40,7 +47,14 @@ public class iOSBacktraceLine implements BacktraceLine {
 	}
 	
 	private String toBacktrace(final String crashLocation, final String memAddress, final String command, final String offset) {
-		return format("{0} {1} {2} + {3}", crashLocation, memAddress, command, offset);
+		String s = null;
+		if(showMemAddress) {
+			s = format("{0} {1} {2} + {3}", crashLocation, memAddress, command, offset);
+		} else {
+			s = format("{0} {1} + {2}", crashLocation, command, offset);
+		}
+		
+		return s;
 	}
 
 	@Override
@@ -50,7 +64,13 @@ public class iOSBacktraceLine implements BacktraceLine {
 
 	@Override
 	public String toXml() {
-		//return format("<line method=\"{0}.{1}\" file=\"{2}\" number=\"{3}\"/>", className, methodName, crashLocation, lineNumber);
-		return format("<line method=\"{0} {1} + {2}\" file=\"{3}\" number=\"\"/>", memAddress, command, offset, crashLocation);
+		String s = null;
+		if(showMemAddress) {
+			s = format("<line method=\"{0} {1} + {2}\" file=\"{3}\" number=\"\"/>", memAddress, command, offset, crashLocation);
+		} else {
+			s = format("<line method=\"{0} + {1}\" file=\"{2}\" number=\"\"/>", command, offset, crashLocation);
+		}
+		
+		return s;
 	}
 }
