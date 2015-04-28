@@ -32,16 +32,6 @@ public class AirbrakeAppenderTest {
 	}
 
 	@Test
-	public void testNotyfyThrowable() {
-		final AirbrakeAppender appender = new AirbrakeAppender(API_KEY, new RubyBacktrace());
-
-		final AirbrakeNotice notice = appender.newNoticeFor(newException(ERROR_MESSAGE));
-
-		assertThat(notice.backtrace(), hasItem("at airbrake.Exceptions.java:16:in `newException'"));
-		assertThat(notice.backtrace(), hasItem("Caused by java.lang.NullPointerException"));
-	}
-
-	@Test
 	public void testNotyfyThrowable$UseBacktrace() {
 		final AirbrakeAppender appender = new AirbrakeAppender(API_KEY, new Backtrace());
 
@@ -51,39 +41,5 @@ public class AirbrakeAppenderTest {
 		assertThat(notice.backtrace(), hasItem("Caused by java.lang.NullPointerException"));
 
 		assertThat(notice.backtrace(), hasItem("at sun.reflect.NativeMethodAccessorImpl.invoke0(NativeMethodAccessorImpl.java-2)"));
-	}
-
-	@Test
-	public void testNotyfyThrowable$UseQuiteBacktrace() {
-		final AirbrakeAppender appender = new AirbrakeAppender(API_KEY, new QuietRubyBacktrace());
-
-		final AirbrakeNotice notice = appender.newNoticeFor(newException(ERROR_MESSAGE));
-
-		assertThat(notice.backtrace(), hasItem("at airbrake.Exceptions.java:16:in `newException'"));
-		assertThat(notice.backtrace(), hasItem("Caused by java.lang.NullPointerException"));
-	}
-
-	@Test
-	public void testNotyfyThrowable$UseRubyBacktrace() {
-		final AirbrakeAppender appender = new AirbrakeAppender(API_KEY, new RubyBacktrace());
-
-		final AirbrakeNotice notice = appender.newNoticeFor(newException(ERROR_MESSAGE));
-
-		assertThat(notice.backtrace(), hasItem("at airbrake.Exceptions.java:16:in `newException'"));
-		assertThat(notice.backtrace(), hasItem("Caused by java.lang.NullPointerException"));
-	}
-
-	@Test
-	public void testNotyfyThrowable$UseSwitchBacktrace() {
-		final SwitchBacktrace switchBacktrace = new SwitchBacktrace();
-		final AirbrakeAppender appender = new AirbrakeAppender(API_KEY, switchBacktrace);
-
-		switchBacktrace.quiet();
-		final AirbrakeNotice quietNotice = appender.newNoticeFor(newException(ERROR_MESSAGE));
-		assertThat(quietNotice.backtrace(), not(hasItem("at sun.reflect.NativeMethodAccessorImpl.invoke0(NativeMethodAccessorImpl.java-2)")));
-
-		switchBacktrace.verbose();
-		final AirbrakeNotice verboseNotice = appender.newNoticeFor(newException(ERROR_MESSAGE));
-		assertThat(verboseNotice.backtrace(), hasItem("at sun.reflect.NativeMethodAccessorImpl.invoke0(NativeMethodAccessorImpl.java-2)"));
 	}
 }

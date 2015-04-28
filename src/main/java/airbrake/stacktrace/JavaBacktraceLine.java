@@ -2,21 +2,36 @@
 // Copyright (c) 2009 Luca Marrocco.
 // Licensed under the Apache License, Version 2.0 (the "License")
 
-package airbrake;
+package airbrake.stacktrace;
 
 import static java.text.MessageFormat.*;
+import airbrake.NoticeXml;
 
-public class BacktraceLine {
+public class JavaBacktraceLine implements BacktraceLine {
 
-	private final String className;
+	private String className;
 
-	private final String fileName;
+	private String fileName;
 
-	private final int lineNumber;
+	private int lineNumber;
 
-	private final String methodName;
+	private String methodName;
+	
+	public JavaBacktraceLine() {}
 
-	public BacktraceLine(String line) {
+	public JavaBacktraceLine(String line) {
+		acceptLine(line);
+	}
+	
+	public JavaBacktraceLine(StackTraceElement element) {
+		this.className = element.getClassName();
+		this.fileName = element.getFileName();
+		this.lineNumber = element.getLineNumber();
+		this.methodName = element.getMethodName();
+	}
+	
+	@Override
+	public BacktraceLine acceptLine(String line) {
 		String classAndMethodName = line.replaceAll("\\(.*", "").replaceAll("^at ", "");
 
 		int periodSepIndex = classAndMethodName.lastIndexOf(".");
@@ -28,6 +43,8 @@ public class BacktraceLine {
 		fileName = fileName(line);
 		lineNumber = lineNumber(line);
 		methodName = methodName(classAndMethodName);
+		
+		return this;
 	}
 
 	private String fileName(String line) {
@@ -38,22 +55,22 @@ public class BacktraceLine {
 		return classAndMethodName.substring(classAndMethodName.lastIndexOf(".") + 1);
 	}
 
-	public BacktraceLine(String className, String fileName, int lineNumber, String methodName) {
+	public JavaBacktraceLine(String className, String fileName, int lineNumber, String methodName) {
 		this.className = className;
 		this.fileName = fileName;
 		this.lineNumber = lineNumber;
 		this.methodName = methodName;
 	}
 
-	String className() {
+	public String className() {
 		return className;
 	}
 
-	String fileName() {
+	public String fileName() {
 		return fileName;
 	}
 
-	int lineNumber() {
+	public int lineNumber() {
 		return lineNumber;
 	}
 
@@ -78,6 +95,7 @@ public class BacktraceLine {
 		return toBacktrace(className, fileName, lineNumber, methodName);
 	}
 
+	@Override
 	public String toXml() {
 		return format("<line method=\"{0}.{1}\" file=\"{2}\" number=\"{3}\"/>", className, methodName, fileName, lineNumber);
 	}

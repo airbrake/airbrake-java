@@ -36,44 +36,6 @@ public class BacktraceTest {
 	}
 
 	@Test
-	public void testExceptionToRubyBacktrace() {
-		final Throwable EXCEPTION = newException("java.lang.RuntimeException: undefined method `password' for nil:NilClass");
-
-		final Iterable<String> backtrace = new RubyBacktrace(EXCEPTION);
-
-		assertThat(backtrace, hasItem("at airbrake.Exceptions.java:16:in `newException'"));
-	}
-
-	@Test
-	public void testExceptionToRubyBacktrace$UsingNewRubyBacktraceEmptyInstanceAsFactoryOfRubyBacktrace() {
-		final Throwable EXCEPTION = newException("java.lang.RuntimeException: undefined method `password' for nil:NilClass");
-
-		final Iterable<String> backtrace = new RubyBacktrace().newBacktrace(EXCEPTION);
-
-		assertThat(backtrace, hasItem("at airbrake.Exceptions.java:16:in `newException'"));
-	}
-
-	@Test
-	public void testFilteredIgnoringMessage() {
-		final Throwable EXCEPTION = newException("java.lang.RuntimeException: undefined method `password' for nil:NilClass");
-
-		final Iterable<String> backtrace = new QuietRubyBacktrace(EXCEPTION);
-
-		assertThat(backtrace, not(hasItem("java.lang.RuntimeException: undefined method `password' for nil:NilClass")));
-		assertThat(backtrace, not(hasItem("java.lang.RuntimeException undefined method `password' for nilNilClass")));
-	}
-
-	@Test
-	public void testFilteredIgnoringMessage$UsingNewQuiteBacktraceEmptyInstanceAsFactoryOfQuietRubyBacktrace() {
-		final Throwable EXCEPTION = newException(ERROR_MESSAGE);
-
-		final Iterable<String> backtrace = new QuietRubyBacktrace().newBacktrace(EXCEPTION);
-
-		assertThat(backtrace, not(hasItem("java.lang.RuntimeException: undefined method `password' for nil:NilClass")));
-		assertThat(backtrace, not(hasItem("java.lang.RuntimeException undefined method `password' for nilNilClass")));
-	}
-
-	@Test
 	public void testFilteredSafeCausedByTest() {
 		final Throwable EXCEPTION = newException(ERROR_MESSAGE);
 
@@ -165,14 +127,6 @@ public class BacktraceTest {
 		assertThat(backtrace, not(hasItem("	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)")));
 		assertThat(backtrace, not(hasItem("	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)")));
 		assertThat(backtrace, not(hasItem("	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)")));
-	}
-
-	@Test
-	public void testIgnoreIgnomreCommonsBacktrace() {
-		final Iterable<String> backtrace = new QuietRubyBacktrace(backtrace());
-		final Iterable<String> filteredBacktrace = new QuietRubyBacktrace(filteredBacktrace());
-
-		assertEquals(filteredBacktrace.toString(), backtrace.toString());
 	}
 
 	@Test

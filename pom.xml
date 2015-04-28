@@ -33,6 +33,18 @@
       <url>https://github.com/lucamarrocco</url>
     </developer>
   </developers>
+  <distributionManagement>
+    <repository>
+      <id>artisan-ci</id>
+        <name>artisan-ci-releases</name>
+        <url>http://artifactory.artisantools.com/artifactory/libs-release-local</url>
+    </repository>
+    <snapshotRepository>
+      <id>artisan-ci</id>
+        <name>artisan-ci-snapshots</name>
+        <url>http://artifactory.artisantools.com/artifactory/libs-snapshot-local</url>
+    </snapshotRepository>
+  </distributionManagement>
   <dependencies>
     <dependency>
       <groupId>commons-logging</groupId>

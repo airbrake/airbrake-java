@@ -43,7 +43,7 @@ public class AirbrakeNotifierTest {
 	}
 
 	private int notifing(final String string) {
-		return new AirbrakeNotifier().notify(new AirbrakeNoticeBuilder(API_KEY, ERROR_MESSAGE) {
+		return new AirbrakeNotifier("https://errbit.artisantools.com/notifier_api/v2/notices").notify(new AirbrakeNoticeBuilder(API_KEY, ERROR_MESSAGE) {
 			{
 				backtrace(new Backtrace(asList(string)));
 			}
@@ -57,7 +57,7 @@ public class AirbrakeNotifierTest {
 		EC2.put("EC2_PRIVATE_KEY", "EC2_PRIVATE_KEY");
 		EC2.put("AWS_ACCESS", "AWS_ACCESS");
 		EC2.put("EC2_CERT", "EC2_CERT");
-		notifier = new AirbrakeNotifier();
+		notifier = new AirbrakeNotifier("https://errbit.artisantools.com/notifier_api/v2/notices");
 	}
 
 	@Test
@@ -120,14 +120,6 @@ public class AirbrakeNotifierTest {
 	}
 
 	@Test
-	public void testSendExceptionNoticeWithFilteredBacktrace() {
-		final Exception EXCEPTION = newException(ERROR_MESSAGE);
-		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, new QuietRubyBacktrace(), EXCEPTION, "test").newNotice();
-
-		assertThat(notifier.notify(notice), is(200));
-	}
-
-	@Test
 	public void testSendExceptionToairbrake() {
 		final Exception EXCEPTION = newException(ERROR_MESSAGE);
 		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, EXCEPTION).newNotice();
@@ -136,35 +128,8 @@ public class AirbrakeNotifierTest {
 	}
 
 	@Test
-	public void testSendExceptionToairbrakeUsingRubyBacktrace() {
-		final Exception EXCEPTION = newException(ERROR_MESSAGE);
-		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, new RubyBacktrace(), EXCEPTION, "test").newNotice();
-
-		assertThat(notifier.notify(notice), is(200));
-	}
-
-	@Test
-	public void testSendExceptionToairbrakeUsingRubyBacktraceAndFilteredSystemProperties() {
-		final Exception EXCEPTION = newException(ERROR_MESSAGE);
-		final AirbrakeNotice notice = new AirbrakeNoticeBuilderUsingFilteredSystemProperties(API_KEY, new RubyBacktrace(), EXCEPTION, "test").newNotice();
-
-		assertThat(notifier.notify(notice), is(200));
-	}
-
-	@Test
 	public void testSendNoticeToairbrake() {
 		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, ERROR_MESSAGE).newNotice();
-
-		assertThat(notifier.notify(notice), is(200));
-	}
-
-	@Test
-	public void testSendNoticeWithFilteredBacktrace() {
-		final AirbrakeNotice notice = new AirbrakeNoticeBuilder(API_KEY, ERROR_MESSAGE) {
-			{
-				backtrace(new QuietRubyBacktrace(strings(slurp(read("backtrace.txt")))));
-			}
-		}.newNotice();
 
 		assertThat(notifier.notify(notice), is(200));
 	}
