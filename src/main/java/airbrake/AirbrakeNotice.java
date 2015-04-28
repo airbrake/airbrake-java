@@ -8,6 +8,9 @@ import static java.util.Arrays.*;
 
 import java.util.*;
 
+import airbrake.stacktrace.BacktraceLine;
+import airbrake.stacktrace.JavaBacktraceLine;
+
 public class AirbrakeNotice {
 
 	private final String apiKey;
@@ -33,6 +36,8 @@ public class AirbrakeNotice {
 	private final String url;
 
 	private final String component;
+	
+	private BacktraceLine lineReader = new JavaBacktraceLine();
 
 	public AirbrakeNotice(final String apiKey, String projectRoot, String environmentName, final String errorMessage, String errorClass, final Backtrace backtrace, final Map<String, Object> request, final Map<String, Object> session, final Map<String, Object> environment,
 			final List<String> environmentFilters, boolean hasRequest, String url, String component) {
@@ -112,5 +117,13 @@ public class AirbrakeNotice {
 
 	public String url() {
 		return url;
+	}
+
+	public BacktraceLine getLineReader() {
+		return lineReader;
+	}
+
+	public void setLineReader(BacktraceLine lineReader) {
+		this.lineReader = lineReader;
 	}
 }

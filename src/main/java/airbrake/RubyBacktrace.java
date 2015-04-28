@@ -26,7 +26,6 @@ public class RubyBacktrace extends Backtrace {
 		return new RubyBacktrace(throwable);
 	}
 
-	@Override
 	protected String toBacktrace(final String className, final String fileName, final int lineNumber, final String methodName) {
 		String filteredFileName = fileName;
 		if (filteredFileName != null) {
