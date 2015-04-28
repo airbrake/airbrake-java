@@ -10,6 +10,9 @@ import java.text.*;
 import java.util.*;
 import java.util.regex.*;
 
+import airbrake.stacktrace.BacktraceLine;
+import airbrake.stacktrace.JavaBacktraceLine;
+
 public class Backtrace implements Iterable<String> {
 
 	public static boolean isValidBacktrace(String string) {
@@ -25,16 +28,28 @@ public class Backtrace implements Iterable<String> {
 
 	private final List<String> filteredBacktrace = new LinkedList<String>();
 
+	private BacktraceLine backtraceLine;
+
 	protected Backtrace() {
 	}
-
+	
 	public Backtrace(final List<String> backtrace) {
+		this(backtrace, new JavaBacktraceLine());
+	}
+
+	public Backtrace(final List<String> backtrace, BacktraceLine backtraceLine) {
+		this.backtraceLine = backtraceLine;
 		this.backtrace.addAll(backtrace);
 		ignore();
 		filter();
 	}
-
+	
 	public Backtrace(final Throwable throwable) {
+		this(throwable, new JavaBacktraceLine());
+	}
+
+	public Backtrace(final Throwable throwable, BacktraceLine backtraceLine) {
+		this.backtraceLine = backtraceLine;
 		toBacktrace(throwable);
 		ignore(".*" + Pattern.quote(messageIn(throwable)) + ".*");
 		ignore();
@@ -195,14 +210,7 @@ public class Backtrace implements Iterable<String> {
 	}
 
 	private String toBacktrace(final StackTraceElement element) {
-		return toBacktrace(element.getClassName(), element.getFileName(),
-				element.getLineNumber(), element.getMethodName());
-	}
-
-	protected String toBacktrace(final String className, final String fileName,
-			final int lineNumber, final String methodName) {
-		return new BacktraceLine(className, fileName, lineNumber, methodName)
-				.toString();
+		return new JavaBacktraceLine(element).toString();
 	}
 
 	private void toBacktrace(final Throwable throwable) {
