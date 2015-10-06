@@ -1,6 +1,8 @@
 Airbrake Java
 =============
 
+<img src="http://f.cl.ly/items/0u0S1z2l3Q05371C1C0I/java%2009.19.32.jpg" width=800px>
+
 This is the notifier jar for integrating apps with [Airbrake](http://airbrake.io) with Java Applications. Sign up for a [Free](https://airbrake.io/account/new/Free) or [Paid](https://airbrake.io/account/new?source=github) account.
 
 When an uncaught exception occurs, Airbrake will POST the relevant data
