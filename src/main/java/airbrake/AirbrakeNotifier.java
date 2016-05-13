@@ -35,6 +35,8 @@ public class AirbrakeNotifier {
 
 	private void addingPropertiesTo(final HttpURLConnection connection) throws ProtocolException {
 		connection.setDoOutput(true);
+		connection.setReadTimeout(60*1000); // 60 secs.
+		connection.setConnectTimeout(60*1000); // 60 secs.
 		connection.setRequestProperty("Content-type", "text/xml");
 		connection.setRequestProperty("Accept", "text/xml, application/xml");
 		connection.setRequestMethod("POST");
