@@ -90,7 +90,7 @@ if you need to specifiy a different url to send notice you can create new notifi
 Support
 -------
 
-For help with using Airbrake and this notifier visit [our support site](http://help.airbrake.io).
+For help with using Airbrake and this notifier email support@airbrake.io
 
 For SSL verification see the [Resources](https://github.com/airbrake/airbrake/blob/master/resources/README.md).
 
