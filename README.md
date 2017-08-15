@@ -1,3 +1,7 @@
+# New Java notifier
+
+Please check our new Java notifier at https://github.com/airbrake/javabrake which will eventually replace this notifier.
+
 Airbrake Java
 =============
 
@@ -8,7 +12,7 @@ This is the notifier jar for integrating apps with [Airbrake](http://airbrake.io
 When an uncaught exception occurs, Airbrake will POST the relevant data
 to the Airbrake server specified in your environment.
 
-The easy way to use airbrake is configuriong log4j appender. Otherwise if you don't 
+The easy way to use airbrake is configuriong log4j appender. Otherwise if you don't
 use log4j you can use airbrake notifier directly with a very simple API.
 
 Setting up with Maven
@@ -40,7 +44,7 @@ Log4j
 	log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
 	log4j.appender.stdout.layout.ConversionPattern=[%d,%p] [%c{1}.%M:%L] %m%n
 
-	log4j.appender.airbrake=airbrake.AirbrakeAppender	
+	log4j.appender.airbrake=airbrake.AirbrakeAppender
 	log4j.appender.airbrake.api_key=YOUR_AIRBRAKE_API_KEY
 	#log4j.appender.airbrake.env=development
 	#log4j.appender.airbrake.env=production
@@ -85,7 +89,7 @@ if you need to specifiy a different url to send notice you can create new notifi
 	}
 
 
-	
+
 
 Support
 -------
@@ -95,5 +99,3 @@ For help with using Airbrake and this notifier email support@airbrake.io
 For SSL verification see the [Resources](https://github.com/airbrake/airbrake/blob/master/resources/README.md).
 
 For any issues, please post then in our [Issues](https://github.com/airbrake/airbrake-java/issues).
-
-
