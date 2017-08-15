@@ -167,7 +167,7 @@ public class NoticeXml {
 			boolean controlCharacter = ch < 32;
 			boolean unicodeButNotAscii = ch > 126;
 			boolean characterWithSpecialMeaningInXML = ch == '<' || ch == '&'
-					|| ch == '>';
+					|| ch == '>' || ch == '"' || ch == '\'';
 			if (characterWithSpecialMeaningInXML || unicodeButNotAscii
 					|| controlCharacter) {
 				stringBuffer.append("&#" + (int) ch + ";");
